@@ -6,21 +6,21 @@
 #    By: hasmith <hasmith@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/11 15:20:50 by hasmith           #+#    #+#              #
-#    Updated: 2018/01/25 23:05:55 by hasmith          ###   ########.fr        #
+#    Updated: 2018/01/26 18:21:09 by hasmith          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-LIB = tmp.a
+LIB = lem_in.a
 
 GIT = test
 
-NAME = lem_in.a
+NAME = lem-in
 
 MAIN = main.c
 
 TEST = <argv[1]>
 
-SRC = $(MAIN)
+SRC =	srcs/parce.c
 
 FLAGS = -Wall -Werror -Wextra
 
@@ -29,10 +29,10 @@ all: $(NAME)
 $(NAME):
 	make all -C libft
 	gcc -g -c $(SRC)
-	cp libft/libft.a $(NAME) 
-	ar rcs $(NAME) *.o
-	gcc $(FALGS) -g -o $(MAIN) $(NAME)
-#	gcc $(FALGS) -g -o $(MAIN) $(NAME) minilibx/libmlx.a libft/libft.a -framework OpenGL -framework AppKit
+	cp libft/libft.a $(LIB) 
+	ar rcs $(LIB) *.o
+	gcc $(FALGS) -g -o $(NAME) $(LIB) $(MAIN) 
+#	gcc $(FALGS) -g -o $(NAME) $(LIB) $(MAIN) minilibx/libmlx.a libft/libft.a -framework OpenGL -framework AppKit
 
 cmain:
 	make re
@@ -47,8 +47,8 @@ clean:
 fclean: clean
 	make fclean -C libft
 	/bin/rm -f $(NAME)
-	/bin/rm -f $(PLAYER)
-	/bin/rm -f filler.trace
+	/bin/rm -f $(LIB)
+	/bin/rm -rf lem-in.dSYM
 
 re: fclean all
 
