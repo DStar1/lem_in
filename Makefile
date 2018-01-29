@@ -6,7 +6,7 @@
 #    By: hasmith <hasmith@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/11 15:20:50 by hasmith           #+#    #+#              #
-#    Updated: 2018/01/26 18:21:09 by hasmith          ###   ########.fr        #
+#    Updated: 2018/01/28 18:11:04 by hasmith          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,8 +36,8 @@ $(NAME):
 
 cmain:
 	make re
-	cp $(PLAYER) resources/players
-	./resources/filler_vm -f resources/maps/map00 -p1 resources/players/$(PLAYER) -p2 resources/players/abanlin.filler
+	./lem-in test.txt
+#	./resources/filler_vm -f resources/maps/map00 -p1 resources/players/$(PLAYER) -p2 resources/players/abanlin.filler
 #	./resources/filler_vm -f resources/maps/map00 -p1 resources/players/$(PLAYER) -p2 resources/players/abanlin.filler > test.txt
 
 clean:

@@ -6,7 +6,7 @@
 /*   By: hasmith <hasmith@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 23:07:38 by hasmith           #+#    #+#             */
-/*   Updated: 2018/01/26 17:52:31 by hasmith          ###   ########.fr       */
+/*   Updated: 2018/01/28 18:50:09 by hasmith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,13 @@ typedef struct		s_vis
 	int				wsize;
 }					t_vis;
 
+typedef struct		s_link
+{
+	char			*l1;
+	char			*l2;
+	struct	s_link	*next;
+}					t_link;
+
 typedef struct		s_mast
 {
 	int				fd;
@@ -43,6 +50,8 @@ typedef struct		s_mast
 	char			**file;
 	int				ants;
 	char			*filename;
+	char			*start_string;
+	char			*end_string;
 }					t_mast;
 
 int     parce(t_mast *mast);
