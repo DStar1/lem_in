@@ -6,7 +6,7 @@
 /*   By: hasmith <hasmith@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 23:06:46 by hasmith           #+#    #+#             */
-/*   Updated: 2018/01/28 19:15:03 by hasmith          ###   ########.fr       */
+/*   Updated: 2018/01/29 21:11:36 by hasmith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,10 @@ int		f_atoi(t_mast *mast, int start)
 
 	nb = 0;
 	start1 = start;
-	while (mast->file[0][start] && ft_isdigit(mast->ln[start]))
+	while (mast->file[0][start] && ft_isdigit(mast->file[0][start]))
 	{
 		nb += (mast->file[0][start] - '0');
+
 		nb *= 10;
 		start++;
 	}
@@ -103,18 +104,24 @@ int     parce(t_mast *mast)
 	while (mast->j < mast->y_len) //reads file and validation
 	{
 		if (mast->j == 0)
-			mast->ants = f_atoi(mast, 0);
-		else if (ft_strncmp(mast->file[mast->j], "##", 2) != 0 && (valid_room(mast) == 0 && valid_link(mast) == 0)) //ft_strncmp(mast->file[mast->j], "##", 2) != 0 && 
+			{mast->ants = f_atoi(mast, 0);}
+		else if ((ft_strncmp(mast->file[mast->j], "#", 1) != 0 && ft_strncmp(mast->file[mast->j], "L", 1) != 0) && (valid_room(mast) == 0 && valid_link(mast) == 0)) //ft_strncmp(mast->file[mast->j], "##", 2) != 0 && 
 		{
 			printf("exit of %s\n", mast->file[mast->j]);
 			exit(1);
 		}
+		if (valid_room(mast))
+			mast->rooms++;
+		if (valid_link(mast))
+			mast->links++;
 		if (ft_strcmp(mast->file[mast->j], "##start") == 0 && mast->file[mast->j + 1])
 		{
 			mast->j++;
 			if (valid_room(mast) != 0)
 			{
 				mast->start_string = mast->file[mast->j];
+				mast->start = mast->rooms;
+				mast->rooms++;
 			}
 		}
 		if (ft_strcmp(mast->file[mast->j], "##end") == 0 && mast->file[mast->j + 1])
@@ -123,8 +130,11 @@ int     parce(t_mast *mast)
 			if (valid_room(mast) != 0)
 			{
 				mast->end_string = mast->file[mast->j];
+				mast->end = mast->rooms;
+				mast->rooms++;
 			}
 		}
+
 		//ignore anything that starts with a ##
 		mast->j++;
 	}

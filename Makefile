@@ -6,7 +6,7 @@
 #    By: hasmith <hasmith@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/11 15:20:50 by hasmith           #+#    #+#              #
-#    Updated: 2018/01/28 18:11:04 by hasmith          ###   ########.fr        #
+#    Updated: 2018/01/29 20:55:54 by hasmith          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,9 @@ MAIN = main.c
 
 TEST = <argv[1]>
 
-SRC =	srcs/parce.c
+SRC =	srcs/parce.c \
+		srcs/make_arrs.c \
+		srcs/set_links.c
 
 FLAGS = -Wall -Werror -Wextra
 
@@ -48,7 +50,7 @@ fclean: clean
 	make fclean -C libft
 	/bin/rm -f $(NAME)
 	/bin/rm -f $(LIB)
-	/bin/rm -rf lem-in.dSYM
+#	/bin/rm -rf lem-in.dSYM
 
 re: fclean all
 
