@@ -6,7 +6,7 @@
 /*   By: hasmith <hasmith@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 23:06:46 by hasmith           #+#    #+#             */
-/*   Updated: 2018/01/29 21:11:36 by hasmith          ###   ########.fr       */
+/*   Updated: 2018/01/31 20:22:02 by hasmith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,13 +95,13 @@ int     parce(t_mast *mast)
 {
 	while ((get_next_line(mast->fd, &mast->ln)))
 	{
-		mast->file[mast->j++] = mast->ln;
-		//free(mast->ln);
-		//mast->ln = NULL;
+		mast->file[mast->j++] = ft_strdup(mast->ln);
+		free(mast->ln);
+		mast->ln = NULL;
 	}
 	free(mast->ln);
-	mast->j = 0;
-	while (mast->j < mast->y_len) //reads file and validation
+	mast->j = -1;
+	while (++mast->j < mast->y_len) //reads file and validation
 	{
 		if (mast->j == 0)
 			{mast->ants = f_atoi(mast, 0);}
@@ -136,7 +136,7 @@ int     parce(t_mast *mast)
 		}
 
 		//ignore anything that starts with a ##
-		mast->j++;
+		// mast->j++;
 	}
 
 
