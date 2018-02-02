@@ -6,7 +6,7 @@
 #    By: hasmith <hasmith@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/11 15:20:50 by hasmith           #+#    #+#              #
-#    Updated: 2018/01/29 20:55:54 by hasmith          ###   ########.fr        #
+#    Updated: 2018/02/01 16:45:56 by hasmith          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ MAIN = main.c
 
 TEST = <argv[1]>
 
-SRC =	srcs/parce.c \
+SRC =	srcs/parse.c \
 		srcs/make_arrs.c \
 		srcs/set_links.c
 

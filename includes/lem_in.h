@@ -6,7 +6,7 @@
 /*   By: hasmith <hasmith@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 23:07:38 by hasmith           #+#    #+#             */
-/*   Updated: 2018/01/29 21:16:27 by hasmith          ###   ########.fr       */
+/*   Updated: 2018/02/01 18:27:33 by hasmith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,15 @@ typedef struct		s_vis
 
 typedef struct		s_links
 {
-	int				p;
-	char			**l;
+	int				p;//index id
+	int				start;//start index
+	int				end;//end index
+	char			*id;
 	char			*l1;
+	int				l1_id;
 	char			*l2;
+	int				l2_id;
+	int				weight;
 	struct	s_links	*next;
 }					t_links;
 
@@ -48,6 +53,7 @@ typedef struct		s_mast
 	int				end;//index of end in room_arr
 	char			*ln;
 	int				j;
+	int				i;
 	int				y_len;
 	char			**file;
 	t_links			**hash_arr;//t_links
@@ -62,7 +68,7 @@ typedef struct		s_mast
 	char			*end_string;
 }					t_mast;
 
-int     parce(t_mast *mast);
+int     parse(t_mast *mast);
 int		set_links(t_mast *mast);
 int		valid_room(t_mast *mast);
 void	make_arrs(t_mast *mast);

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parce.c                                            :+:      :+:    :+:   */
+/*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hasmith <hasmith@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 23:06:46 by hasmith           #+#    #+#             */
-/*   Updated: 2018/01/31 20:22:02 by hasmith          ###   ########.fr       */
+/*   Updated: 2018/02/01 16:45:59 by hasmith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int		valid_room(t_mast *mast)
 ** also maybe if start char is 'L' it is false
 */
 
-int     parce(t_mast *mast)
+int     parse(t_mast *mast)
 {
 	while ((get_next_line(mast->fd, &mast->ln)))
 	{
