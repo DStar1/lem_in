@@ -6,7 +6,7 @@
 /*   By: hasmith <hasmith@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/29 20:35:29 by hasmith           #+#    #+#             */
-/*   Updated: 2018/01/31 20:38:16 by hasmith          ###   ########.fr       */
+/*   Updated: 2018/02/02 17:25:01 by hasmith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	make_arrs(t_mast *mast)
 	l = 0;
 	mast->j = 0;
 	mast->room_arr = (char***)ft_memalloc(sizeof(char**) * mast->rooms + 1);
+	//mast->r_arr_st = (t_room**)ft_memalloc(sizeof(t_room*) * mast->rooms + 1);
 	mast->link_arr = (char***)ft_memalloc(sizeof(char**) * mast->links + 1);
 	while (mast->file[mast->j])// <= mast->y_len)
 	{
@@ -31,6 +32,12 @@ void	make_arrs(t_mast *mast)
 				printf("START:");
 			if (r == mast->end)
 				printf("END:");
+			// if (!ft_isnbr(mast->room_arr[r][1]) || !ft_isnbr(mast->room_arr[r][2]))//change to numbers for the coordinates of the struct
+			// {
+			// 	// ft_atoi(mast->room_arr[r][1]);
+			// 	// ft_atoi(mast->room_arr[r][2]);
+			// 	exit(1); //invalid coordinates
+			// }				
 			printf("r:(%s, %s, %s) ", mast->room_arr[r][0], mast->room_arr[r][1], mast->room_arr[r][2]);////////////////////////////
 			r++;
 		}

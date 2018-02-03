@@ -6,7 +6,7 @@
 /*   By: hasmith <hasmith@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/29 18:15:22 by hasmith           #+#    #+#             */
-/*   Updated: 2018/02/01 19:04:20 by hasmith          ###   ########.fr       */
+/*   Updated: 2018/02/02 17:24:53 by hasmith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	go_thru_lnks(t_mast *mast)
 		tmp = mast->hash_arr[i];
 		while (tmp != 0)
 		{
-			printf(" (%s, %s)(%d, %d) |", tmp->l1, tmp->l2, tmp->l1_id, tmp->l2_id);
+			printf(" (%s, %s)(%d, %d)c:(%d, %d) |", tmp->l1, tmp->l2, tmp->l1_id, tmp->l2_id, tmp->c1, tmp->c2);
 			//free(tmp);
 			tmp = tmp->next;
 		}
@@ -42,6 +42,8 @@ int	find_next_lnk(t_mast *mast, t_links *newlist, int boolean)
 			newlist->l1 = mast->link_arr[mast->j][0];
 			//newlist->l1_id = mast->j;
 			newlist->l2 = mast->link_arr[mast->j][1];
+			// newlist->c1 = ft_atoi(mast->room_arr[mast->i][1]);//////
+			// newlist->c2 = ft_atoi(mast->room_arr[mast->i][2]);/////
 			newlist->start = mast->start;
 			newlist->end = mast->end;
 		}
@@ -51,7 +53,8 @@ int	find_next_lnk(t_mast *mast, t_links *newlist, int boolean)
 	{
 		if (boolean == 1)
 		{
-			
+			// newlist->c1 = ft_atoi(mast->room_arr[mast->i][1]);/////
+			// newlist->c2 = ft_atoi(mast->room_arr[mast->i][2]);//////			
 			newlist->l1 = mast->link_arr[mast->j][1];
 			newlist->l2 = mast->link_arr[mast->j][0];
 			newlist->start = mast->start;

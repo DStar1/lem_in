@@ -6,7 +6,7 @@
 /*   By: hasmith <hasmith@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 23:10:34 by hasmith           #+#    #+#             */
-/*   Updated: 2018/02/01 22:01:31 by hasmith          ###   ########.fr       */
+/*   Updated: 2018/02/02 16:29:28 by hasmith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int     main(int ac, char **av)
 
 	set_links(&mast);
 
-	solve(&mast);//solves
+	//solve(&mast);//solves
 
 	//ft_putarr(mast.file);
 	close(mast.fd);//get rid of when reading from stdin
