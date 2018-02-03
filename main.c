@@ -6,7 +6,7 @@
 /*   By: hasmith <hasmith@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 23:10:34 by hasmith           #+#    #+#             */
-/*   Updated: 2018/02/02 16:29:28 by hasmith          ###   ########.fr       */
+/*   Updated: 2018/02/02 20:52:48 by hasmith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,11 @@ int		find_size(t_mast *mast)
 	mast->fd = open(mast->filename, O_RDONLY);/////get rid of when reading from stdin
 	while ((get_next_line(mast->fd, &mast->ln)))
 	{
-		mast->y_len++;
+		if (ft_strncmp(mast->ln, "#", 1) != 0)
+			mast->y_len++;
+		else if (ft_strcmp(mast->ln, "##start") == 0 || ft_strcmp(mast->ln, "##end") == 0)
+			mast->y_len++;
+		
 		free(mast->ln);
 		mast->ln = NULL;
 	}
@@ -74,7 +78,8 @@ int     main(int ac, char **av)
 
 	set_links(&mast);
 
-	//solve(&mast);//solves
+	solve(&mast);//solves
+	
 
 	//ft_putarr(mast.file);
 	close(mast.fd);//get rid of when reading from stdin

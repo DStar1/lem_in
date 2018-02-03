@@ -6,7 +6,7 @@
 /*   By: hasmith <hasmith@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 23:07:38 by hasmith           #+#    #+#             */
-/*   Updated: 2018/02/02 17:24:25 by hasmith          ###   ########.fr       */
+/*   Updated: 2018/02/02 18:49:43 by hasmith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ typedef struct		s_vis
 typedef struct		s_room
 {
 	int				visited;//visited points
-	char			**rms;
+	char			*room;
 	int				c[2];
 }					t_room;
 
@@ -49,8 +49,8 @@ typedef struct		s_links
 	int				l1_id;
 	char			*l2;
 	int				l2_id;
-	int				c1;////////coordinate 1
-	int				c2;////////coordinate 2
+	// int				c1;////////coordinate 1
+	// int				c2;////////coordinate 2
 	int				weight;
 	struct	s_links	*next;
 }					t_links;
@@ -63,6 +63,7 @@ typedef struct		s_mast
 	char			*ln;
 	int				j;
 	int				i;
+	int				found;
 	int				y_len;
 	char			**file;
 	t_links			**hash_arr;//t_links
@@ -73,6 +74,7 @@ typedef struct		s_mast
 	char			*start_string;
 	char			**start_arr;
 	char			***room_arr;
+	// t_room			**room_arr;
 	t_room			**r_arr_st;
 	char			***link_arr;
 	char			*end_string;
@@ -83,5 +85,6 @@ int		set_links(t_mast *mast);
 int		valid_room(t_mast *mast);
 void	make_arrs(t_mast *mast);
 int		valid_link(t_mast *mast);
+int     solve(t_mast *mast);
 
 #endif

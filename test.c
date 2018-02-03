@@ -33,22 +33,22 @@ int main()
  
 void DFS(int i)
 {
-    node *p;
+    node *tmp;
    
     printf("\n%d",i);
     if (i == 3)
         printf("Start: ");
     if (i == 2)
         return ;
-    p=G[i];
+    tmp=G[i];
     visited[i]=1;
-    while(p!=NULL)//
+    while(tmp!=NULL)//
     {
-       i=p->vertex;
+       i=tmp->vertex;
        
        if(!visited[i])
             DFS(i);
-        p=p->next;
+        tmp=tmp->next;
     }
 }
 

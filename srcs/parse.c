@@ -6,7 +6,7 @@
 /*   By: hasmith <hasmith@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 23:06:46 by hasmith           #+#    #+#             */
-/*   Updated: 2018/02/01 16:45:59 by hasmith          ###   ########.fr       */
+/*   Updated: 2018/02/02 20:58:13 by hasmith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,10 @@ int		valid_link(t_mast *mast)
 				return (1);
 			}
 		}
+		else
+			exit (1);/////////////
 	}
+	// exit (1);/////////////
 	// if (str)
 	// 	free(str);
 	return (0);
@@ -80,7 +83,10 @@ int		valid_room(t_mast *mast)
 				return (1);
 			}
 		}
+		else
+			exit (1);/////////////
 	}
+	// exit (1);/////////////
 	// if (str)
 	// 	free(str);
 	return (0);
@@ -95,7 +101,10 @@ int     parse(t_mast *mast)
 {
 	while ((get_next_line(mast->fd, &mast->ln)))
 	{
-		mast->file[mast->j++] = ft_strdup(mast->ln);
+		if (ft_strncmp(mast->ln, "#", 1) != 0)
+			mast->file[mast->j++] = ft_strdup(mast->ln);
+		else if (ft_strcmp(mast->ln, "##start") == 0 || ft_strcmp(mast->ln, "##end") == 0)
+			mast->file[mast->j++] = ft_strdup(mast->ln);
 		free(mast->ln);
 		mast->ln = NULL;
 	}
@@ -103,13 +112,14 @@ int     parse(t_mast *mast)
 	mast->j = -1;
 	while (++mast->j < mast->y_len) //reads file and validation
 	{
+		// printf("%s\n", mast->file[mast->j]);
 		if (mast->j == 0)
 			{mast->ants = f_atoi(mast, 0);}
-		else if ((ft_strncmp(mast->file[mast->j], "#", 1) != 0 && ft_strncmp(mast->file[mast->j], "L", 1) != 0) && (valid_room(mast) == 0 && valid_link(mast) == 0)) //ft_strncmp(mast->file[mast->j], "##", 2) != 0 && 
-		{
-			printf("exit of %s\n", mast->file[mast->j]);
-			exit(1);
-		}
+		// else if ((ft_strncmp(mast->file[mast->j], "#", 1) != 0 && ft_strncmp(mast->file[mast->j], "L", 1) != 0) && (valid_room(mast) == 0 && valid_link(mast) == 0)) //ft_strncmp(mast->file[mast->j], "##", 2) != 0 && 
+		// {
+		// 	printf("exit of %s\n", mast->file[mast->j]);
+		// 	exit(1);
+		// }
 		if (valid_room(mast))
 			mast->rooms++;
 		if (valid_link(mast))
@@ -123,16 +133,22 @@ int     parse(t_mast *mast)
 				mast->start = mast->rooms;
 				mast->rooms++;
 			}
+			else
+				exit (1);/////////////
 		}
-		if (ft_strcmp(mast->file[mast->j], "##end") == 0 && mast->file[mast->j + 1])
+		else if (ft_strcmp(mast->file[mast->j], "##end") == 0 && mast->file[mast->j + 1])
 		{
 			mast->j++;
+			// printf("YOUR IN %d\n", mast->rooms);
 			if (valid_room(mast) != 0)
 			{
+				
 				mast->end_string = mast->file[mast->j];
 				mast->end = mast->rooms;
 				mast->rooms++;
 			}
+			else
+				exit (1);/////////////
 		}
 
 		//ignore anything that starts with a ##

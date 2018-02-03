@@ -6,7 +6,7 @@
 /*   By: hasmith <hasmith@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/29 18:15:22 by hasmith           #+#    #+#             */
-/*   Updated: 2018/02/02 17:24:53 by hasmith          ###   ########.fr       */
+/*   Updated: 2018/02/02 20:14:04 by hasmith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	go_thru_lnks(t_mast *mast)
 		tmp = mast->hash_arr[i];
 		while (tmp != 0)
 		{
-			printf(" (%s, %s)(%d, %d)c:(%d, %d) |", tmp->l1, tmp->l2, tmp->l1_id, tmp->l2_id, tmp->c1, tmp->c2);
+			printf(" (%s, %s)(%d, %d) |", tmp->l1, tmp->l2, tmp->l1_id, tmp->l2_id);
 			//free(tmp);
 			tmp = tmp->next;
 		}
@@ -34,7 +34,7 @@ void	go_thru_lnks(t_mast *mast)
 
 int	find_next_lnk(t_mast *mast, t_links *newlist, int boolean)
 {
-	if (ft_strcmp(mast->room_arr[mast->i][0], mast->link_arr[mast->j][0]) == 0)//compare name with first link name
+	if (ft_strcmp(mast->r_arr_st[mast->i]->room, mast->link_arr[mast->j][0]) == 0)//compare name with first link name
 	{
 		if (boolean == 1)
 		{
@@ -49,7 +49,7 @@ int	find_next_lnk(t_mast *mast, t_links *newlist, int boolean)
 		}
 		return (1);
 	}
-	else if (ft_strcmp(mast->room_arr[mast->i][0], mast->link_arr[mast->j][1]) == 0)//compare name with first link name
+	else if (ft_strcmp(mast->r_arr_st[mast->i]->room, mast->link_arr[mast->j][1]) == 0)//compare name with first link name
 	{
 		if (boolean == 1)
 		{
@@ -84,8 +84,8 @@ t_links	*build_links(t_mast *mast)
 			newlist->l1_id = mast->i;//the first time you need to set this to start
 			// newlist->l = mast->start_arr;
 			i = -1;
-			while (++i < mast->y_len)
-				if (ft_strcmp(newlist->l2, mast->room_arr[i][0]) == 0)
+			while (++i < mast->rooms)
+				if (ft_strcmp(newlist->l2, mast->r_arr_st[i]->room) == 0)
 				{
 					newlist->l2_id = i;
 					break ;
@@ -106,6 +106,12 @@ t_links	*build_links(t_mast *mast)
 			}
 		}
 		mast->j++;
+	}
+	if (!begin)
+	{
+		newlist = (t_links*)malloc(sizeof(t_links));
+		begin = newlist;
+		begin = 0;
 	}
 	return (begin);	
 }
