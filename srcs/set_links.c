@@ -6,7 +6,7 @@
 /*   By: hasmith <hasmith@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/29 18:15:22 by hasmith           #+#    #+#             */
-/*   Updated: 2018/02/02 20:14:04 by hasmith          ###   ########.fr       */
+/*   Updated: 2018/02/03 21:15:24 by hasmith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ t_links	*build_links(t_mast *mast)
 			newlist = (t_links*)malloc(sizeof(t_links));
 			find_next_lnk(mast, newlist, 1);
 			newlist->l1_id = mast->i;//the first time you need to set this to start
-			// newlist->l = mast->start_arr;
+			//newlist->visited = -1;
 			i = -1;
 			while (++i < mast->rooms)
 				if (ft_strcmp(newlist->l2, mast->r_arr_st[i]->room) == 0)

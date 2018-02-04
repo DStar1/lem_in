@@ -6,11 +6,15 @@
 /*   By: hasmith <hasmith@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/18 17:07:02 by hasmith           #+#    #+#             */
-/*   Updated: 2017/11/18 15:40:51 by hasmith          ###   ########.fr       */
+/*   Updated: 2018/02/03 20:35:40 by hasmith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+
+/*
+** free array and if 0, dont free pointer, if 1, free array and pointer to array
+*/
 
 void	free_array(char **array)
 {

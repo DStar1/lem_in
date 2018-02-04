@@ -6,7 +6,7 @@
 /*   By: hasmith <hasmith@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/29 20:35:29 by hasmith           #+#    #+#             */
-/*   Updated: 2018/02/02 20:41:21 by hasmith          ###   ########.fr       */
+/*   Updated: 2018/02/03 20:36:37 by hasmith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	make_arrs(t_mast *mast)
 {
 	int r;
 	int l;
+	int i;
 	char **tmp;
 
 	r = 0;
@@ -50,14 +51,18 @@ void	make_arrs(t_mast *mast)
 			// mast->room_arr[r] = ft_strsplit(mast->file[mast->j], ' ');
 			tmp = ft_strsplit(mast->file[mast->j], ' ');
 			mast->r_arr_st[r]->room = tmp[0];
+			//mast->r_arr_st[r]->visited = -1;
 			if (ft_isnbr(tmp[1]) && ft_isnbr(tmp[2]))//change to numbers for the coordinates of the struct
 			{
 				mast->r_arr_st[r]->c[0] = ft_atoi(tmp[1]);
+				free(tmp[1]);
 				mast->r_arr_st[r]->c[1] = ft_atoi(tmp[2]);
+				free(tmp[2]);
 			}
 			else
 				exit(1); //invalid coordinates
 			//printf("r:(%s, %s, %s) ", mast->room_arr[r][0], mast->room_arr[r][1], mast->room_arr[r][2]);////////////////////////////
+			free(tmp);
 			r++;
 		}
 		else if (valid_link(mast) == 1)

@@ -6,7 +6,7 @@
 /*   By: hasmith <hasmith@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 23:07:38 by hasmith           #+#    #+#             */
-/*   Updated: 2018/02/02 18:49:43 by hasmith          ###   ########.fr       */
+/*   Updated: 2018/02/03 21:15:19 by hasmith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ typedef struct		s_room
 	int				visited;//visited points
 	char			*room;
 	int				c[2];
+	int				prev;
+	int				weight;
 }					t_room;
 
 typedef struct		s_links
