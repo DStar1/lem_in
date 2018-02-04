@@ -6,11 +6,34 @@
 /*   By: hasmith <hasmith@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 23:10:34 by hasmith           #+#    #+#             */
-/*   Updated: 2018/02/04 11:15:14 by hasmith          ###   ########.fr       */
+/*   Updated: 2018/02/04 15:53:37 by hasmith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/lem_in.h"
+
+void	send_ants(t_mast *mast)
+{
+	int i;
+	int j;
+	int ants_sent;
+
+	ants_sent = -1;
+	while (++ants_sent < mast->ants)
+	{
+		i = -1;
+		while (i < ants_sent - 1)
+			mast->path[i + 1][0] += 1;
+			mast->path[i][0] -= 1;
+		j = -1;
+		while (j < mast->qsize)
+		{
+			if (mast->path[j][3])
+				printf("L%d-%s", ants_sent, mast->r_arr_st[mast->path[j][0]]->room);
+		}
+		printf("\n");
+	}
+}
 
 void	free_linked_arr(t_mast *mast)
 {
@@ -66,6 +89,7 @@ int     main(int ac, char **av)
 	mast.filename = ft_strdup(av[1]);
 	find_size(&mast);
 	mast.fd = open(mast.filename, O_RDONLY);/////get rid of when reading from stdin
+	//mast.fd = 0;
 	mast.file = (char **)malloc(sizeof(char*) * (mast.y_len + 1));//maybe null terminate it
 	mast.file[mast.y_len] = 0;
 	parse(&mast);
@@ -81,7 +105,9 @@ int     main(int ac, char **av)
 	solve(&mast);//solves
 	
 
-	//ft_putarr(mast.file);
+	// send_ants(&mast);
+
+	////ft_putarr(mast.file);
 	close(mast.fd);//get rid of when reading from stdin
 	printf("y_len: %d, ants: %d, rooms: %d, links: %d\n", mast.y_len, mast.ants, mast.rooms, mast.links);
 
@@ -91,3 +117,5 @@ int     main(int ac, char **av)
 	//exit(1);
     return (0);
 }
+
+///segfaults if no rooms

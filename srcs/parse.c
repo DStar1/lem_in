@@ -6,7 +6,7 @@
 /*   By: hasmith <hasmith@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 23:06:46 by hasmith           #+#    #+#             */
-/*   Updated: 2018/02/02 20:58:13 by hasmith          ###   ########.fr       */
+/*   Updated: 2018/02/04 14:41:24 by hasmith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,7 +154,8 @@ int     parse(t_mast *mast)
 		//ignore anything that starts with a ##
 		// mast->j++;
 	}
-
+	// if (mast->rooms == 0)
+	// 	exit (1);
 
 	return (0);
 }
