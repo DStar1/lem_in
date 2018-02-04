@@ -6,7 +6,7 @@
 /*   By: hasmith <hasmith@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/01 22:01:41 by hasmith           #+#    #+#             */
-/*   Updated: 2018/02/04 11:48:46 by hasmith          ###   ########.fr       */
+/*   Updated: 2018/02/04 11:36:04 by hasmith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,16 +165,16 @@ void dkstra(t_mast *mast)
 	}
 	// final = 0;
 	int q = mast->qsize;
-	int **path;//[mast->qsize + 1];
-	path = (int**)malloc(sizeof(int*) * mast->qsize + 1);
+	int *path[mast->qsize + 1];
+	// mast->path = (int**)malloc(sizeof(int*) * mast->qsize + 1);
 	while (mast->res)
 	{
-		printf("\nQ:%d, %s-", q, mast->r_arr_st[mast->res->qu[0]]->room);
-		path[q--] = mast->res->qu;
+		printf("\n%s-", mast->r_arr_st[mast->res->qu[0]]->room);
+		mast->path[q--] = mast->res->qu;
 		mast->res = mast->res->next;
 	}
 	mast->path = (int**)path;
-	printf("\n\n");//, mast->r_arr_st[final[0][0]]->room);
+	printf("\n");//, mast->r_arr_st[final[0][0]]->room);
 	for (int a = 0; a <= mast->qsize; a++)
 	{
 		printf("%s-", mast->r_arr_st[mast->path[a][0]]->room);

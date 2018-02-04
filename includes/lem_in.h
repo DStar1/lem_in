@@ -6,7 +6,7 @@
 /*   By: hasmith <hasmith@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 23:07:38 by hasmith           #+#    #+#             */
-/*   Updated: 2018/02/03 21:15:19 by hasmith          ###   ########.fr       */
+/*   Updated: 2018/02/04 11:05:42 by hasmith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,15 @@ typedef struct		s_vis
 	void			*win;
 	int				wsize;
 }					t_vis;
+
+typedef struct		s_res
+{
+	int				*qu;
+	int				l1;
+	int				l2;
+	int				ants;
+	struct	s_res	*next;
+}					t_res;
 
 typedef struct		s_room
 {
@@ -78,6 +87,9 @@ typedef struct		s_mast
 	char			***room_arr;
 	// t_room			**room_arr;
 	t_room			**r_arr_st;
+	t_res			*res;
+	int				qsize;
+	int				**path;
 	char			***link_arr;
 	char			*end_string;
 }					t_mast;

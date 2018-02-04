@@ -6,7 +6,7 @@
 /*   By: hasmith <hasmith@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 23:10:34 by hasmith           #+#    #+#             */
-/*   Updated: 2018/02/03 23:04:07 by hasmith          ###   ########.fr       */
+/*   Updated: 2018/02/04 11:15:14 by hasmith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,5 +88,6 @@ int     main(int ac, char **av)
 	free_linked_arr(&mast);
 	// while (1)
 	// 	;
+	//exit(1);
     return (0);
 }
