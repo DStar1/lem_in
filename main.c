@@ -6,7 +6,7 @@
 /*   By: hasmith <hasmith@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 23:10:34 by hasmith           #+#    #+#             */
-/*   Updated: 2018/02/04 15:53:37 by hasmith          ###   ########.fr       */
+/*   Updated: 2018/02/04 16:01:45 by hasmith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ int		find_size(t_mast *mast)
 {
 	mast->y_len = 0;
 	mast->fd = open(mast->filename, O_RDONLY);/////get rid of when reading from stdin
+	// mast->fd = 0;
 	while ((get_next_line(mast->fd, &mast->ln)))
 	{
 		if (ft_strncmp(mast->ln, "#", 1) != 0)
@@ -89,7 +90,7 @@ int     main(int ac, char **av)
 	mast.filename = ft_strdup(av[1]);
 	find_size(&mast);
 	mast.fd = open(mast.filename, O_RDONLY);/////get rid of when reading from stdin
-	//mast.fd = 0;
+	// mast.fd = 0;
 	mast.file = (char **)malloc(sizeof(char*) * (mast.y_len + 1));//maybe null terminate it
 	mast.file[mast.y_len] = 0;
 	parse(&mast);
