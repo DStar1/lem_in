@@ -6,7 +6,7 @@
 /*   By: hasmith <hasmith@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 23:10:34 by hasmith           #+#    #+#             */
-/*   Updated: 2018/02/05 19:12:04 by hasmith          ###   ########.fr       */
+/*   Updated: 2018/02/05 18:36:58 by hasmith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,28 +26,22 @@ void	send_ants(t_mast *mast)
 	start_i = 1;
 	ants_sent = 0;
 	j = -mast->ants;
-	printf("%d\n", ants[mast->ants - 1]);
-	int p = 0;
-	while (p <= mast->qsize)//ants[mast->ants - 1] < mast->qsize)//j < mast->qsize)
+	while (j < mast->qsize)//ants[mast->ants - 1] < mast->qsize)//j < mast->qsize)
 	{
 		if (ants_sent < mast->ants)
 			ants_sent++;
-		i = 0;
-		//i = 1;
-		j = ants_sent - 1;
-		while (i <= ants_sent && i <= mast->qsize && i <= mast->ants) //(ants[mast->ants] < mast->qsize)
+		i = 1;
+		i = mast->qsize;
+		while (i >= 1)//<= ants_sent && i <= mast->qsize)//(i <= ants_sent && i <= mast->qsize)// && i <= mast->ants) //(ants[mast->ants] < mast->qsize)
 		{
-			if (j < mast->ants -1 && j >= 0)
-				ants[j] += 1;
-			if (ants[j] >= 0 && ants[j] <= mast->qsize)
-				printf("L%d-%s ", ants[j] + 1, mast->r_arr_st[mast->path[j + 1][0]]->room);
-			//printf("\n ants: %d\n", ants[mast->ants - 1]);
+			ants[i - 1] += 1;
+			if (ants[i - 1] >= 0 && ants[i - 1] <= mast->qsize)
+				printf("L%d-%s ", ants[i - 1] + 1, mast->r_arr_st[mast->path[i][0]]->room);
 			// start_i++;
-			j--;
-			i++;
+			i--;
 		}
 		// start_i = tmp;
-		p++;
+		j++;
 		// j = -1;
 		// while (j < mast->qsize)
 		// {
