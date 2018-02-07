@@ -6,7 +6,7 @@
 /*   By: hasmith <hasmith@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/01 22:01:41 by hasmith           #+#    #+#             */
-/*   Updated: 2018/02/06 17:46:09 by hasmith          ###   ########.fr       */
+/*   Updated: 2018/02/06 20:10:54 by hasmith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,15 +98,18 @@ int w = 0;////////////
 	last = 0;
 	cnt = 0;
 	int cnt1 = 0;
+	// qu = (int**)ft_memalloc(sizeof(int*) * mast->rooms);
+	// qu[last] = (int*)ft_memalloc(sizeof(int) * 3);
 	qu[last][0] = mast->start;
 	mast->r_arr_st[qu[cnt][0]]->weight = weight;
 	while (qu[weight][0] != mast->end)
 	{
-
+		
 			// printf("%s\n", mast->r_arr_st[qu[weight][0]]->room);
 		tmp = mast->hash_arr[qu[weight][0]];
 		(cnt == 0) ? cnt++ : 0;
 		weight++;
+		// qu[weight] = (int*)ft_memalloc(sizeof(int) * 3);
 		while(tmp != NULL)//
 		{
 			ft_putnbr(w);
@@ -151,7 +154,7 @@ int w = 0;////////////
 		}
 		if (qu[weight][0] == mast->end || qu[cnt][0] == mast->end)
 			break ;
-		w++;
+		//w++;
 	}
 	mast->qsize = 0;
 	//int	final[cnt][3];
