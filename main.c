@@ -6,7 +6,7 @@
 /*   By: hasmith <hasmith@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 23:10:34 by hasmith           #+#    #+#             */
-/*   Updated: 2018/02/06 16:10:38 by hasmith          ###   ########.fr       */
+/*   Updated: 2018/02/06 16:55:34 by hasmith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	send_ants(t_mast *mast)
 			// 	ft_putchar(' ');
 			// printf("\n%d\n", ants[i]);
 			ants[i] += 1;
-			if (ants[i] >= 0 && ants[i] <= mast->qsize)
+			if (ants[i] >= 0 && ants[i] < mast->qsize)
 			{
 				ft_putchar('L');
 				ft_putnbr(i + 1);
@@ -117,24 +117,24 @@ int     main(int ac, char **av)
 	mast.file = (char **)malloc(sizeof(char*) * (mast.y_len + 1));//maybe null terminate it
 	mast.file[mast.y_len] = 0;
 	parse(&mast);
-
+//ft_putnbr(1);
 	//mast.j = -1;
 	// while (++mast.j < mast.y_len)
 	// 	printf("!:%s\n", mast.file[mast.j]);
 	make_arrs(&mast);
-
+//ft_putnbr(2);
 
 	set_links(&mast);
-
+//ft_putnbr(3);
 	solve(&mast);//solves
 	
-
+//ft_putnbr(4);
 	send_ants(&mast);
-
+//ft_putnbr(5);
 	////ft_putarr(mast.file);
 	close(mast.fd);//get rid of when reading from stdin
-	printf("y_len: %d, ants: %d, rooms: %d, links: %d\n", mast.y_len, mast.ants, mast.rooms, mast.links);
-
+	// printf("y_len: %d, ants: %d, rooms: %d, links: %d\n", mast.y_len, mast.ants, mast.rooms, mast.links);
+//ft_putnbr(6);
 	free_linked_arr(&mast);
 	// while (1)
 	// 	;

@@ -6,7 +6,7 @@
 /*   By: hasmith <hasmith@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/29 18:15:22 by hasmith           #+#    #+#             */
-/*   Updated: 2018/02/03 21:15:24 by hasmith          ###   ########.fr       */
+/*   Updated: 2018/02/06 16:38:17 by hasmith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,6 @@ int		set_links(t_mast *mast)
 		mast->i++;
 	}
 	mast->hash_arr[mast->i] = 0;
-	go_thru_lnks(mast);
+	// go_thru_lnks(mast);
 	return (0);
 }

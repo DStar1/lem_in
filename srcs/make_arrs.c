@@ -6,7 +6,7 @@
 /*   By: hasmith <hasmith@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/29 20:35:29 by hasmith           #+#    #+#             */
-/*   Updated: 2018/02/03 20:36:37 by hasmith          ###   ########.fr       */
+/*   Updated: 2018/02/06 16:37:47 by hasmith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	make_arrs(t_mast *mast)
 		else if (valid_link(mast) == 1)
 		{
 			mast->link_arr[l] = ft_strsplit(mast->file[mast->j], '-');
-			printf("l:(%s, %s) ", mast->link_arr[l][0], mast->link_arr[l][1]);////////////////////////////
+			// printf("l:(%s, %s) ", mast->link_arr[l][0], mast->link_arr[l][1]);////////////////////////////
 			l++;
 		}
 		// if (tmp)
@@ -79,7 +79,7 @@ void	make_arrs(t_mast *mast)
 	mast->r_arr_st[r] = 0;
 	//mast->room_arr[r] = 0;
 	mast->link_arr[l] = 0;
-	printf("\n");
-	go_thru_lnks(mast);
+	// printf("\n");
+	// go_thru_lnks(mast);
 		// printf("y_len: %d, links up to now: %d, line: %d, mast->link_arr[4]: %s\n", mast->y_len, l, mast->j, mast->link_arr[3][0]);
 }

@@ -6,7 +6,7 @@
 /*   By: hasmith <hasmith@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/01 22:01:41 by hasmith           #+#    #+#             */
-/*   Updated: 2018/02/06 16:28:10 by hasmith          ###   ########.fr       */
+/*   Updated: 2018/02/06 17:46:09 by hasmith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,33 +93,51 @@ void dkstra(t_mast *mast)
 	int last;
 	int weight;
 	int cnt;
-
+int w = 0;////////////
 	weight = 0;
 	last = 0;
 	cnt = 0;
+	int cnt1 = 0;
 	qu[last][0] = mast->start;
 	mast->r_arr_st[qu[cnt][0]]->weight = weight;
 	while (qu[weight][0] != mast->end)
 	{
-			printf("%s\n", mast->r_arr_st[qu[weight][0]]->room);
+
+			// printf("%s\n", mast->r_arr_st[qu[weight][0]]->room);
 		tmp = mast->hash_arr[qu[weight][0]];
 		(cnt == 0) ? cnt++ : 0;
 		weight++;
 		while(tmp != NULL)//
 		{
-			int cnt1 = 0;
+			ft_putnbr(w);
+			ft_putstr("w\n");
+			cnt1 = 0;
 			for (int i = 0; i <= cnt; i++)
 			{
+				ft_putstr("i: qu[i][0] = tmp->l2_id, wieght =\n");
+				ft_putnbr(i);
+				ft_putchar(' ');
+				ft_putnbr(qu[i][0]);
+				ft_putchar(' ');
+				ft_putnbr(tmp->l2_id);
+				ft_putchar('\n');
 				if (qu[i][0] == tmp->l2_id && qu[i][2] != 0 && qu[i][2] < weight)
 					cnt1++;
+				ft_putnbr(i);
+				ft_putchar('\n');
 			}
 			if (cnt1 == 0)
 			{
-				
+				ft_putstr("in, cnt = then mast->rooms =\n");
+				ft_putnbr(cnt);
+				ft_putchar(' ');
+				ft_putnbr(mast->rooms);
+				ft_putchar('\n');
 				qu[cnt][0] = tmp->l2_id;
 				qu[cnt][1] = tmp->l1_id;
 				qu[cnt][2] = weight;
-				printf("%s-%s;wieght:%d\n", mast->r_arr_st[qu[cnt][0]]->room, mast->r_arr_st[qu[cnt][1]]->room, weight);
+				// printf("%s-%s;wieght:%d\n", mast->r_arr_st[qu[cnt][0]]->room, mast->r_arr_st[qu[cnt][1]]->room, weight);
+				ft_putstr("in2\n");
 				cnt++;
 				if (qu[cnt][0] == mast->end)
 					break ;
@@ -129,10 +147,11 @@ void dkstra(t_mast *mast)
 			//if(!mast->r_arr_st[i]->visited)
 
 			tmp = tmp->next;
-			
+			// w++;
 		}
 		if (qu[weight][0] == mast->end || qu[cnt][0] == mast->end)
 			break ;
+		w++;
 	}
 	mast->qsize = 0;
 	//int	final[cnt][3];
@@ -146,7 +165,7 @@ void dkstra(t_mast *mast)
 		final->ants = 0;
 		if (!mast->res)
 			mast->res = final;
-		printf("(q:%d)%s-", mast->qsize, mast->r_arr_st[qu[weight][0]]->room);
+		// printf("(q:%d)%s-", mast->qsize, mast->r_arr_st[qu[weight][0]]->room);
 		// final[q][0] = qu[weight][0];
 		// final[q--][1] = qu[weight][1];
 		if (qu[weight][0] == mast->start)
@@ -163,25 +182,26 @@ void dkstra(t_mast *mast)
 			}
 		}
 	}
-	// final = 0;
-	int q = mast->qsize;
+	final = 0;
+	mast->qsize++;
+	int q = mast->qsize - 1;
 	//int **path;//[mast->qsize + 1];
-	mast->path = (int*)malloc(sizeof(int) * mast->qsize + 1);
-	printf("qsize: %d\n", mast->qsize);
+	mast->path = (int*)malloc(sizeof(int) * mast->qsize);
+	// printf("qsize: %d\n", mast->qsize);
 	while (mast->res)
 	{
-		printf("\nQ:%d, %s-", q, mast->r_arr_st[mast->res->qu[0]]->room);
+		// printf("\nQ:%d, %s-", q, mast->r_arr_st[mast->res->qu[0]]->room);
 		mast->path[q] = mast->res->qu[0];
 		//printf("\nnew: Q:%d", mast->path[q]);
 		q--;
 		mast->res = mast->res->next;
 	}
 	//mast->path = (int**)path;
-	printf("\n\n");//, mast->r_arr_st[final[0][0]]->room);
-	for (int a = 0; a < mast->qsize; a++)
-	{
-		printf("%s-", mast->r_arr_st[mast->path[a]]->room);
-	}
+	// printf("\n\n");//, mast->r_arr_st[final[0][0]]->room);
+	// for (int a = 0; a < mast->qsize; a++)
+	// {
+	// 	// printf("%s-", mast->r_arr_st[mast->path[a]]->room);
+	// }
 	//pass the size nd the mast
 }
 
@@ -190,11 +210,14 @@ void dkstra(t_mast *mast)
 
 int     solve(t_mast *mast)
 {
-
-	printf("\n", mast->start);
+ft_putnbr(1);
+ft_putchar('\n');
+	// printf("\n", mast->start);
 	dkstra(mast);
+ft_putnbr(2);
+ft_putchar('\n');
 	//DFS(mast, mast->start);
-	printf("\n");
+	// printf("\n");
 
 	
 	// int i;

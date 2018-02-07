@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   solve.c                                            :+:      :+:    :+:   */
+/*   solve.1.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hasmith <hasmith@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/01 22:01:41 by hasmith           #+#    #+#             */
-/*   Updated: 2018/02/04 11:36:04 by hasmith          ###   ########.fr       */
+/*   Updated: 2018/02/06 16:46:22 by hasmith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void dkstra(t_mast *mast)
 	mast->r_arr_st[qu[cnt][0]]->weight = weight;
 	while (qu[weight][0] != mast->end)
 	{
-			printf("%s\n", mast->r_arr_st[qu[weight][0]]->room);
+			// printf("%s\n", mast->r_arr_st[qu[weight][0]]->room);
 		tmp = mast->hash_arr[qu[weight][0]];
 		(cnt == 0) ? cnt++ : 0;
 		weight++;
@@ -119,7 +119,7 @@ void dkstra(t_mast *mast)
 				qu[cnt][0] = tmp->l2_id;
 				qu[cnt][1] = tmp->l1_id;
 				qu[cnt][2] = weight;
-				printf("%s-%s;wieght:%d\n", mast->r_arr_st[qu[cnt][0]]->room, mast->r_arr_st[qu[cnt][1]]->room, weight);
+				// printf("%s-%s;wieght:%d\n", mast->r_arr_st[qu[cnt][0]]->room, mast->r_arr_st[qu[cnt][1]]->room, weight);
 				cnt++;
 				if (qu[cnt][0] == mast->end)
 					break ;
