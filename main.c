@@ -6,7 +6,7 @@
 /*   By: hasmith <hasmith@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 23:10:34 by hasmith           #+#    #+#             */
-/*   Updated: 2018/02/05 19:12:04 by hasmith          ###   ########.fr       */
+/*   Updated: 2018/02/06 16:10:38 by hasmith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,43 +18,43 @@ void	send_ants(t_mast *mast)
 	int start_i;
 	int j;
 	int ants_sent;
-	int ants[mast->ants];
+	int *ants;//[mast->ants];
 
-	for (int q = 0; q < mast->ants; q++)
-		ants[q] = -1;
+	ants = (int*)ft_memalloc(sizeof(int) * mast->ants);
+	// for (int q = 0; q < mast->ants; q++)
+	// 	{ants[q] += 3;printf("%d\n", ants[q]);}//ants[q] = 0;
 
-	start_i = 1;
+	// printf("\nmast->path[ants[2]]: %d, qsize: %d\n", mast->path[ants[2]], mast->qsize);//ants[mast->ants - 1]);
+	// ft_putchar('\n');
 	ants_sent = 0;
-	j = -mast->ants;
-	printf("%d\n", ants[mast->ants - 1]);
 	int p = 0;
-	while (p <= mast->qsize)//ants[mast->ants - 1] < mast->qsize)//j < mast->qsize)
+	while (ants[mast->ants - 1] < mast->ants)
 	{
 		if (ants_sent < mast->ants)
 			ants_sent++;
 		i = 0;
-		//i = 1;
-		j = ants_sent - 1;
-		while (i <= ants_sent && i <= mast->qsize && i <= mast->ants) //(ants[mast->ants] < mast->qsize)
+		while (i < ants_sent)
 		{
-			if (j < mast->ants -1 && j >= 0)
-				ants[j] += 1;
-			if (ants[j] >= 0 && ants[j] <= mast->qsize)
-				printf("L%d-%s ", ants[j] + 1, mast->r_arr_st[mast->path[j + 1][0]]->room);
-			//printf("\n ants: %d\n", ants[mast->ants - 1]);
-			// start_i++;
-			j--;
+			// if (i != 0)
+			// 	ft_putchar(' ');
+			// printf("\n%d\n", ants[i]);
+			ants[i] += 1;
+			if (ants[i] >= 0 && ants[i] <= mast->qsize)
+			{
+				ft_putchar('L');
+				ft_putnbr(i + 1);
+				ft_putchar('-');
+				ft_putstr(mast->r_arr_st[mast->path[ants[i]]]->room);
+				if (i != ants_sent - 1)
+					ft_putchar(' ');
+				// printf("ants[%d]: %d, ants sent: %d, L%d-%s ", i, ants[i], ants_sent, i + 1, mast->r_arr_st[mast->path[ants[i]]]->room);
+			}
 			i++;
 		}
-		// start_i = tmp;
+
 		p++;
-		// j = -1;
-		// while (j < mast->qsize)
-		// {
-		// 	if (mast->path[j][3])
-		// 		printf("L%d-%s", ants_sent, mast->r_arr_st[mast->path[j][0]]->room);
-		// }
-		printf("\n");
+		ft_putchar('\n');
+		// printf("\n");
 	}
 }
 
