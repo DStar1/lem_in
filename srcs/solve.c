@@ -6,7 +6,7 @@
 /*   By: hasmith <hasmith@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/01 22:01:41 by hasmith           #+#    #+#             */
-/*   Updated: 2018/02/06 20:10:54 by hasmith          ###   ########.fr       */
+/*   Updated: 2018/02/07 15:36:01 by hasmith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void DFS(t_mast *mast, int i)
 void dkstra(t_mast *mast)
 {
 	t_links *tmp;
-	int	qu[mast->rooms][3]; //0 is name of current, 1 is name of next, 2 is weight
+	int	**que;//[mast->rooms][3]; //0 is name of current, 1 is name of next, 2 is weight
 	int last;
 	int weight;
 	int cnt;
@@ -98,64 +98,69 @@ int w = 0;////////////
 	last = 0;
 	cnt = 0;
 	int cnt1 = 0;
-	// qu = (int**)ft_memalloc(sizeof(int*) * mast->rooms);
-	// qu[last] = (int*)ft_memalloc(sizeof(int) * 3);
-	qu[last][0] = mast->start;
-	mast->r_arr_st[qu[cnt][0]]->weight = weight;
-	while (qu[weight][0] != mast->end)
+	que = (int**)ft_memalloc(sizeof(int*) * mast->rooms);
+	for (int o = 0; o < mast->rooms; o++)
+	{
+		que[o] = (int*)ft_memalloc(sizeof(int) * 3);
+		que[o][0] = -1;
+		que[o][1] = -1;
+		// que[o][2] = -1;
+	}
+	que[0][0] = mast->start;
+	que[0][2] = 1;//added one to get rid of error
+	mast->r_arr_st[que[0][0]]->weight = weight;
+	while (que[weight][0] != mast->end)// && weight < mast->rooms) //loop until you find the end
 	{
 		
-			// printf("%s\n", mast->r_arr_st[qu[weight][0]]->room);
-		tmp = mast->hash_arr[qu[weight][0]];
-		(cnt == 0) ? cnt++ : 0;
+			// printf("%s\n", mast->r_arr_st[que[weight][0]]->room);
+		tmp = mast->hash_arr[que[weight][0]];
+		(cnt == 0) ? cnt++ : 0; //keep track of where to add next room to que
+		//if cnt is == mast->rooms, there is no path?
 		weight++;
-		// qu[weight] = (int*)ft_memalloc(sizeof(int) * 3);
-		while(tmp != NULL)//
+		//cnt = weight;
+		//que[weight] = (int*)ft_memalloc(sizeof(int) * 3);
+		while(tmp != NULL)//go through list of all connected points
 		{
-			ft_putnbr(w);
-			ft_putstr("w\n");
 			cnt1 = 0;
-			for (int i = 0; i <= cnt; i++)
+			int i = 0;
+			for (i = 0; i <= cnt && i < mast->rooms; i++)//go through the queue up to the last one set
 			{
-				ft_putstr("i: qu[i][0] = tmp->l2_id, wieght =\n");
-				ft_putnbr(i);
-				ft_putchar(' ');
-				ft_putnbr(qu[i][0]);
-				ft_putchar(' ');
-				ft_putnbr(tmp->l2_id);
-				ft_putchar('\n');
-				if (qu[i][0] == tmp->l2_id && qu[i][2] != 0 && qu[i][2] < weight)
+				// if (que[i][0] == que[cnt - 1][0])// || que[i][0] == que[cnt][1])
+				// 	cnt1++;
+				if ((que[i][0] == tmp->l2_id) && que[i][2] != 0 && que[i][2] <= weight)//checks if the next link is already in que// exists and it has less weight than the current weight and it is one of the next links, cnt1++
 					cnt1++;
-				ft_putnbr(i);
-				ft_putchar('\n');
 			}
-			if (cnt1 == 0)
+			if (cnt1 == 0) //if non of the above was true, set the next que to the current next node
 			{
-				ft_putstr("in, cnt = then mast->rooms =\n");
-				ft_putnbr(cnt);
-				ft_putchar(' ');
-				ft_putnbr(mast->rooms);
-				ft_putchar('\n');
-				qu[cnt][0] = tmp->l2_id;
-				qu[cnt][1] = tmp->l1_id;
-				qu[cnt][2] = weight;
-				// printf("%s-%s;wieght:%d\n", mast->r_arr_st[qu[cnt][0]]->room, mast->r_arr_st[qu[cnt][1]]->room, weight);
-				ft_putstr("in2\n");
-				cnt++;
-				if (qu[cnt][0] == mast->end)
+				que[cnt][0] = tmp->l2_id;
+				que[cnt][1] = tmp->l1_id;
+				que[cnt][2] = weight;
+				// printf("%s-%s;wieght:%d\n", mast->r_arr_st[que[cnt][0]]->room, mast->r_arr_st[que[cnt][1]]->room, weight);
+				
+				if ((int)que[cnt][0] == mast->end) //if we have reached the end, we have found the path
 					break ;
+				cnt++;
 			}
 
-			//mast->r_arr_st[qu[cnt][0]]->weight = weight;
+			//mast->r_arr_st[que[cnt][0]]->weight = weight;
 			//if(!mast->r_arr_st[i]->visited)
 
 			tmp = tmp->next;
 			// w++;
 		}
-		if (qu[weight][0] == mast->end || qu[cnt][0] == mast->end)
+		if (que[weight][0] == mast->end)// || que[cnt-1][0] == mast->end)
 			break ;
 		//w++;
 	}
+
+
+
+
+
+
+
+
+	///////construct path
 	mast->qsize = 0;
 	//int	final[cnt][3];
 	mast->res = 0;
@@ -164,18 +169,18 @@ int w = 0;////////////
 	final->next = 0;
 	while (1)
 	{
-		final->qu = (int*)qu[weight];
+		final->qu = (int*)que[weight];
 		final->ants = 0;
 		if (!mast->res)
 			mast->res = final;
-		// printf("(q:%d)%s-", mast->qsize, mast->r_arr_st[qu[weight][0]]->room);
-		// final[q][0] = qu[weight][0];
-		// final[q--][1] = qu[weight][1];
-		if (qu[weight][0] == mast->start)
+		// printf("(q:%d)%s-", mast->qsize, mast->r_arr_st[que[weight][0]]->room);
+		// final[q][0] = que[weight][0];
+		// final[q--][1] = que[weight][1];
+		if (que[weight][0] == mast->start)
 			break ;
 		for (int i = 0; i <= cnt; i++)
 		{
-			if (qu[i][0] == qu[weight][1])
+			if (que[i][0] == que[weight][1])
 			{
 				weight = i;
 				mast->qsize++;
@@ -193,7 +198,7 @@ int w = 0;////////////
 	// printf("qsize: %d\n", mast->qsize);
 	while (mast->res)
 	{
-		// printf("\nQ:%d, %s-", q, mast->r_arr_st[mast->res->qu[0]]->room);
+		// printf("\nQ:%d, %s-", q, mast->r_arr_st[mast->res->que[0]]->room);
 		mast->path[q] = mast->res->qu[0];
 		//printf("\nnew: Q:%d", mast->path[q]);
 		q--;
@@ -289,7 +294,7 @@ ft_putchar('\n');
 // 				openSet.Add(neighbor)
 			
 // 			// The distance from start to a neighbor
-// 			//the "dist_between" function may vary as per the solution requirements.
+// 			//the "dist_between" function may vary as per the solution requeirements.
 // 			tentative_weight := weight[current] + dist_between(current, neighbor)
 // 			if tentative_weight >= weight[neighbor]
 // 				continue		// This is not a better path.
