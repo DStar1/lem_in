@@ -6,31 +6,31 @@
 /*   By: hasmith <hasmith@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/01 22:01:41 by hasmith           #+#    #+#             */
-/*   Updated: 2018/02/07 15:36:01 by hasmith          ###   ########.fr       */
+/*   Updated: 2018/02/07 20:39:23 by hasmith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lem_in.h"
 
-static void	go_thru_lnks(t_mast *mast)
-{
-	int i;
-	t_links *tmp;
+// static void	go_thru_lnks(t_mast *mast)
+// {
+// 	int i;
+// 	t_links *tmp;
 
-	i = 0;
-	while (i < mast->rooms)
-	{
-		tmp = mast->hash_arr[i];
-		while (tmp != 0)
-		{
-			printf(" (%s, %s)(%d, %d) |", tmp->l1, tmp->l2, tmp->l1_id, tmp->l2_id);
-			//free(tmp);
-			tmp = tmp->next;
-		}
-		printf("\n");
-		i++;
-	}
-}
+// 	i = 0;
+// 	while (i < mast->rooms)
+// 	{
+// 		tmp = mast->hash_arr[i];
+// 		while (tmp != 0)
+// 		{
+// 			printf(" (%s, %s)(%d, %d) |", tmp->l1, tmp->l2, tmp->l1_id, tmp->l2_id);
+// 			//free(tmp);
+// 			tmp = tmp->next;
+// 		}
+// 		printf("\n");
+// 		i++;
+// 	}
+// }
 
 void DFS(t_mast *mast, int i)
 {
@@ -59,32 +59,61 @@ void DFS(t_mast *mast, int i)
 	}
 }
 
+//////////////
 
 
+void construct(t_mast *mast)
+{
+	int weight = mast->weight;
+	int **que = mast->que;
+	int cnt = mast->cnt;
+	///////construct path
+	mast->qsize = 0;
+	//int	final[cnt][3];
+	mast->res = 0;
+	t_res *final = 0;
+	final = (t_res*)malloc(sizeof(t_res));
+	final->next = 0;
+	while (1)
+	{
+		final->qu = (int*)que[weight];
+		final->ants = 0;
+		if (!mast->res)
+			mast->res = final;
+		// printf("(q:%d)%s-", mast->qsize, mast->r_arr_st[que[weight][0]]->room);
+		// final[q][0] = que[weight][0];
+		// final[q--][1] = que[weight][1];
+		if (que[weight][0] == mast->start)
+			break ;
+		for (int i = 0; i <= cnt; i++)
+		{
+			if (que[i][0] == que[weight][1])
+			{
+				weight = i;
+				mast->qsize++;
+				final->next = (t_res*)malloc(sizeof(t_res));
+				final = final->next;
+				break ;
+			}
+		}
+	}
+	final = 0;
+	mast->qsize++;
+	int q = mast->qsize - 1;
+	//int **path;//[mast->qsize + 1];
+	mast->path = (int*)malloc(sizeof(int) * mast->qsize);
+	// printf("qsize: %d\n", mast->qsize);
+	while (mast->res)
+	{
+		// printf("\nQ:%d, %s-", q, mast->r_arr_st[mast->res->que[0]]->room);
+		mast->path[q] = mast->res->qu[0];
+		//printf("\nnew: Q:%d", mast->path[q]);
+		q--;
+		mast->res = mast->res->next;
+	}
+}
 
-
-
-
-// void	path(t_mast *mast, int arr_size)
-// {
-// 	char **path;
-// 	int i;
-
-// 	i = mast->end;
-// 	path = (char**)memalloc(sizeof(char*) * arr_size + 1);
-// 	path[arr_size] = 0;
-// 	arr_size--;
-// 	while (arr_size >= 0)
-// 	{
-// 		path[arr_size] = mast->r_arr_st[i]->room;
-// 		i = mast->r_arr_st[i]->prev;
-// 		arr_size--;
-// 	}
-// 	i = 0;
-// 	while (path[i])
-// 		printf("%s-", path[i++]);
-// 	printf("\n");
-// }
+///
 
 void dkstra(t_mast *mast)
 {
@@ -138,7 +167,14 @@ int w = 0;////////////
 				// printf("%s-%s;wieght:%d\n", mast->r_arr_st[que[cnt][0]]->room, mast->r_arr_st[que[cnt][1]]->room, weight);
 				
 				if ((int)que[cnt][0] == mast->end) //if we have reached the end, we have found the path
-					break ;
+				{
+					// printf("weight: %d, l: %d, %d, \n", weight, cnt, que[cnt][0]);
+					mast->weight = cnt;
+					mast->que = que;
+					mast->cnt = cnt;
+					construct(mast);
+					return ;
+				}
 				cnt++;
 			}
 
@@ -148,82 +184,32 @@ int w = 0;////////////
 			tmp = tmp->next;
 			// w++;
 		}
-		if (que[weight][0] == mast->end)// || que[cnt-1][0] == mast->end)
-			break ;
+		// printf("que[weight][0]: %d\n", que[weight][0]);
+		// for (int l = 0; l < weight; l++)
+		// 	if (que[l][0] == mast->end)
+		// 		printf("weight: %d, l: %d, %d, ", weight, l, que[l][0]);
+		// if (que[weight][0] == mast->end)// || que[cnt-1][0] == mast->end)
+		// {
+		// 	ft_putnbr(1);
+		// 	break ;
+		// }
 		//w++;
 	}
-
-
-
-
-
-
-
-
-	///////construct path
-	mast->qsize = 0;
-	//int	final[cnt][3];
-	mast->res = 0;
-	t_res *final = 0;
-	final = (t_res*)malloc(sizeof(t_res));
-	final->next = 0;
-	while (1)
-	{
-		final->qu = (int*)que[weight];
-		final->ants = 0;
-		if (!mast->res)
-			mast->res = final;
-		// printf("(q:%d)%s-", mast->qsize, mast->r_arr_st[que[weight][0]]->room);
-		// final[q][0] = que[weight][0];
-		// final[q--][1] = que[weight][1];
-		if (que[weight][0] == mast->start)
-			break ;
-		for (int i = 0; i <= cnt; i++)
-		{
-			if (que[i][0] == que[weight][1])
-			{
-				weight = i;
-				mast->qsize++;
-				final->next = (t_res*)malloc(sizeof(t_res));
-				final = final->next;
-				break ;
-			}
-		}
-	}
-	final = 0;
-	mast->qsize++;
-	int q = mast->qsize - 1;
-	//int **path;//[mast->qsize + 1];
-	mast->path = (int*)malloc(sizeof(int) * mast->qsize);
-	// printf("qsize: %d\n", mast->qsize);
-	while (mast->res)
-	{
-		// printf("\nQ:%d, %s-", q, mast->r_arr_st[mast->res->que[0]]->room);
-		mast->path[q] = mast->res->qu[0];
-		//printf("\nnew: Q:%d", mast->path[q]);
-		q--;
-		mast->res = mast->res->next;
-	}
-	//mast->path = (int**)path;
-	// printf("\n\n");//, mast->r_arr_st[final[0][0]]->room);
-	// for (int a = 0; a < mast->qsize; a++)
-	// {
-	// 	// printf("%s-", mast->r_arr_st[mast->path[a]]->room);
-	// }
-	//pass the size nd the mast
 }
+
+
+
+
+
+
 
 
 
 
 int     solve(t_mast *mast)
 {
-ft_putnbr(1);
-ft_putchar('\n');
 	// printf("\n", mast->start);
 	dkstra(mast);
-ft_putnbr(2);
-ft_putchar('\n');
 	//DFS(mast, mast->start);
 	// printf("\n");
 
@@ -249,68 +235,3 @@ ft_putchar('\n');
 
 
 
-
-
-// int Astar(t_mast *mast)//start, goal)
-// 	// The set of nodes already evaluated
-// 	t_room *closedSet;// := {}
-
-// 	// The set of currently discovered nodes that are not evaluated yet.
-// 	// Initially, only the start node is known.
-// 	t_room *openSet;// := {start}
-// 	openSet = mast->r_arr_st[mast->start];
-
-// 	// For each node, which node it can most efficiently be reached from.
-// 	// If a node can be reached from many nodes, cameFrom will eventually contain the
-// 	// most efficient previous step.
-// 	t_room *cameFrom;// := an empty map
-
-// 	// For each node, the cost of getting from the start node to that node.
-// 	t_room *weight;// := map with default value of Infinity
-
-// 	// The cost of going from start to start is zero.
-// 	weight[start] == 0
-
-// 	// For each node, the total cost of getting from the start node to the goal
-// 	// by passing by that node. That value is partly known, partly heuristic.
-// 	t_room *fweight;// := map with default value of Infinity
-
-// 	// For the first node, that value is completely heuristic.
-// 	fweight[start] := heuristic_cost_estimate(start, goal)
-
-// 	while openSet is not empty
-// 		current := the node in openSet having the lowest fweight[] value
-// 		if current = goal
-// 			return reconstruct_path(cameFrom, current)
-
-// 		openSet.Remove(current)
-// 		closedSet.Add(current)
-
-// 		for each neighbor of current
-// 			if neighbor in closedSet
-// 				continue		// Ignore the neighbor which is already evaluated.
-
-// 			if neighbor not in openSet	// Discover a new node
-// 				openSet.Add(neighbor)
-			
-// 			// The distance from start to a neighbor
-// 			//the "dist_between" function may vary as per the solution requeirements.
-// 			tentative_weight := weight[current] + dist_between(current, neighbor)
-// 			if tentative_weight >= weight[neighbor]
-// 				continue		// This is not a better path.
-
-// 			// This path is the best until now. Record it!
-// 			cameFrom[neighbor] := current
-// 			weight[neighbor] := tentative_weight
-// 			fweight[neighbor] := weight[neighbor] + heuristic_cost_estimate(neighbor, goal) 
-
-// 	return failure
-
-// function reconstruct_path(cameFrom, current)
-// 	total_path := [current]
-// 	while current in cameFrom.Keys:
-// 		current := cameFrom[current]
-// 		total_path.append(current)
-// 	return total_path
-
-	

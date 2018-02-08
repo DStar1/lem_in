@@ -6,7 +6,7 @@
 /*   By: hasmith <hasmith@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 23:07:38 by hasmith           #+#    #+#             */
-/*   Updated: 2018/02/06 15:56:28 by hasmith          ###   ########.fr       */
+/*   Updated: 2018/02/07 20:29:55 by hasmith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,9 @@ typedef struct		s_mast
 	int				*path;
 	char			***link_arr;
 	char			*end_string;
+	int				weight;
+	int				**que;
+	int				cnt;
 }					t_mast;
 
 int     parse(t_mast *mast);

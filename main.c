@@ -6,7 +6,7 @@
 /*   By: hasmith <hasmith@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 23:10:34 by hasmith           #+#    #+#             */
-/*   Updated: 2018/02/06 16:55:34 by hasmith          ###   ########.fr       */
+/*   Updated: 2018/02/07 21:03:51 by hasmith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,23 +21,16 @@ void	send_ants(t_mast *mast)
 	int *ants;//[mast->ants];
 
 	ants = (int*)ft_memalloc(sizeof(int) * mast->ants);
-	// for (int q = 0; q < mast->ants; q++)
-	// 	{ants[q] += 3;printf("%d\n", ants[q]);}//ants[q] = 0;
-
-	// printf("\nmast->path[ants[2]]: %d, qsize: %d\n", mast->path[ants[2]], mast->qsize);//ants[mast->ants - 1]);
-	// ft_putchar('\n');
+	for (int q = 0; q < mast->ants; q++)
+		ants[q] = 0;//ants[q] = -1; //check for ants ending on index 0
 	ants_sent = 0;
-	int p = 0;
-	while (ants[mast->ants - 1] < mast->ants)
+	while (mast->path[ants[mast->ants - 1]] != mast->end)//< mast->ants)
 	{
 		if (ants_sent < mast->ants)
 			ants_sent++;
 		i = 0;
 		while (i < ants_sent)
 		{
-			// if (i != 0)
-			// 	ft_putchar(' ');
-			// printf("\n%d\n", ants[i]);
 			ants[i] += 1;
 			if (ants[i] >= 0 && ants[i] < mast->qsize)
 			{
@@ -47,14 +40,10 @@ void	send_ants(t_mast *mast)
 				ft_putstr(mast->r_arr_st[mast->path[ants[i]]]->room);
 				if (i != ants_sent - 1)
 					ft_putchar(' ');
-				// printf("ants[%d]: %d, ants sent: %d, L%d-%s ", i, ants[i], ants_sent, i + 1, mast->r_arr_st[mast->path[ants[i]]]->room);
 			}
 			i++;
 		}
-
-		p++;
 		ft_putchar('\n');
-		// printf("\n");
 	}
 }
 

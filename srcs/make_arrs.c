@@ -6,29 +6,29 @@
 /*   By: hasmith <hasmith@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/29 20:35:29 by hasmith           #+#    #+#             */
-/*   Updated: 2018/02/06 16:37:47 by hasmith          ###   ########.fr       */
+/*   Updated: 2018/02/07 18:09:12 by hasmith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lem_in.h"
 
-static void	go_thru_lnks(t_mast *mast)
-{
-	int i;
-	t_links *tmp;
+// static void	go_thru_lnks(t_mast *mast)
+// {
+// 	int i;
+// 	t_links *tmp;
 
-	i = 0;
-	while (i < mast->rooms)
-	{
-			if (i == mast->start)
-				printf("START:\n");
-			if (i == mast->end)
-				printf("END:\n");
-		printf("CC:(room:%s)(%d, %d) |", mast->r_arr_st[i]->room, mast->r_arr_st[i]->c[0], mast->r_arr_st[i]->c[1]);
-		i++;
-	}
-	printf("\n\n");
-}
+// 	i = 0;
+// 	while (i < mast->rooms)
+// 	{
+// 			if (i == mast->start)
+// 				printf("START:\n");
+// 			if (i == mast->end)
+// 				printf("END:\n");
+// 		printf("CC:(room:%s)(%d, %d) |", mast->r_arr_st[i]->room, mast->r_arr_st[i]->c[0], mast->r_arr_st[i]->c[1]);
+// 		i++;
+// 	}
+// 	printf("\n\n");
+// }
 
 void	make_arrs(t_mast *mast)
 {

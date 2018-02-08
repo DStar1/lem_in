@@ -6,31 +6,31 @@
 /*   By: hasmith <hasmith@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/01 22:01:41 by hasmith           #+#    #+#             */
-/*   Updated: 2018/02/06 16:46:22 by hasmith          ###   ########.fr       */
+/*   Updated: 2018/02/07 18:09:43 by hasmith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lem_in.h"
 
-static void	go_thru_lnks(t_mast *mast)
-{
-	int i;
-	t_links *tmp;
+// static void	go_thru_lnks(t_mast *mast)
+// {
+// 	int i;
+// 	t_links *tmp;
 
-	i = 0;
-	while (i < mast->rooms)
-	{
-		tmp = mast->hash_arr[i];
-		while (tmp != 0)
-		{
-			printf(" (%s, %s)(%d, %d) |", tmp->l1, tmp->l2, tmp->l1_id, tmp->l2_id);
-			//free(tmp);
-			tmp = tmp->next;
-		}
-		printf("\n");
-		i++;
-	}
-}
+// 	i = 0;
+// 	while (i < mast->rooms)
+// 	{
+// 		tmp = mast->hash_arr[i];
+// 		while (tmp != 0)
+// 		{
+// 			printf(" (%s, %s)(%d, %d) |", tmp->l1, tmp->l2, tmp->l1_id, tmp->l2_id);
+// 			//free(tmp);
+// 			tmp = tmp->next;
+// 		}
+// 		printf("\n");
+// 		i++;
+// 	}
+// }
 
 void DFS(t_mast *mast, int i)
 {
