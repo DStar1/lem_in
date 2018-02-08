@@ -6,7 +6,7 @@
 /*   By: hasmith <hasmith@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/01 22:01:41 by hasmith           #+#    #+#             */
-/*   Updated: 2018/02/07 20:39:23 by hasmith          ###   ########.fr       */
+/*   Updated: 2018/02/08 13:28:40 by hasmith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void DFS(t_mast *mast, int i)
 void construct(t_mast *mast)
 {
 	int weight = mast->weight;
-	int **que = mast->que;
+	// int **mast->que = mast->mast->que;
 	int cnt = mast->cnt;
 	///////construct path
 	mast->qsize = 0;
@@ -76,18 +76,18 @@ void construct(t_mast *mast)
 	final->next = 0;
 	while (1)
 	{
-		final->qu = (int*)que[weight];
+		final->qu = (int*)mast->que[weight];
 		final->ants = 0;
 		if (!mast->res)
 			mast->res = final;
-		// printf("(q:%d)%s-", mast->qsize, mast->r_arr_st[que[weight][0]]->room);
-		// final[q][0] = que[weight][0];
-		// final[q--][1] = que[weight][1];
-		if (que[weight][0] == mast->start)
+		// printf("(q:%d)%s-", mast->qsize, mast->r_arr_st[mast->que[weight][0]]->room);
+		// final[q][0] = mast->que[weight][0];
+		// final[q--][1] = mast->que[weight][1];
+		if (mast->que[weight][0] == mast->start)
 			break ;
 		for (int i = 0; i <= cnt; i++)
 		{
-			if (que[i][0] == que[weight][1])
+			if (mast->que[i][0] == mast->que[weight][1])
 			{
 				weight = i;
 				mast->qsize++;
@@ -105,7 +105,7 @@ void construct(t_mast *mast)
 	// printf("qsize: %d\n", mast->qsize);
 	while (mast->res)
 	{
-		// printf("\nQ:%d, %s-", q, mast->r_arr_st[mast->res->que[0]]->room);
+		// printf("\nQ:%d, %s-", q, mast->r_arr_st[mast->res->mast->que[0]]->room);
 		mast->path[q] = mast->res->qu[0];
 		//printf("\nnew: Q:%d", mast->path[q]);
 		q--;
@@ -118,7 +118,7 @@ void construct(t_mast *mast)
 void dkstra(t_mast *mast)
 {
 	t_links *tmp;
-	int	**que;//[mast->rooms][3]; //0 is name of current, 1 is name of next, 2 is weight
+	// int	**mast->que;//[mast->rooms][3]; //0 is name of current, 1 is name of next, 2 is weight
 	int last;
 	int weight;
 	int cnt;
@@ -127,50 +127,50 @@ int w = 0;////////////
 	last = 0;
 	cnt = 0;
 	int cnt1 = 0;
-	que = (int**)ft_memalloc(sizeof(int*) * mast->rooms);
+	mast->que = (int**)ft_memalloc(sizeof(int*) * mast->rooms);
 	for (int o = 0; o < mast->rooms; o++)
 	{
-		que[o] = (int*)ft_memalloc(sizeof(int) * 3);
-		que[o][0] = -1;
-		que[o][1] = -1;
-		// que[o][2] = -1;
+		mast->que[o] = (int*)ft_memalloc(sizeof(int) * 3);
+		mast->que[o][0] = -1;
+		mast->que[o][1] = -1;
+		// mast->que[o][2] = -1;
 	}
-	que[0][0] = mast->start;
-	que[0][2] = 1;//added one to get rid of error
-	mast->r_arr_st[que[0][0]]->weight = weight;
-	while (que[weight][0] != mast->end)// && weight < mast->rooms) //loop until you find the end
+	mast->que[0][0] = mast->start;
+	mast->que[0][2] = 1;//added one to get rid of error
+	mast->r_arr_st[mast->que[0][0]]->weight = weight;
+	while (mast->que[weight][0] != mast->end)// && weight < mast->rooms) //loop until you find the end
 	{
 		
-			// printf("%s\n", mast->r_arr_st[que[weight][0]]->room);
-		tmp = mast->hash_arr[que[weight][0]];
-		(cnt == 0) ? cnt++ : 0; //keep track of where to add next room to que
+			// printf("%s\n", mast->r_arr_st[mast->que[weight][0]]->room);
+		tmp = mast->hash_arr[mast->que[weight][0]];
+		(cnt == 0) ? cnt++ : 0; //keep track of where to add next room to mast->que
 		//if cnt is == mast->rooms, there is no path?
 		weight++;
 		//cnt = weight;
-		//que[weight] = (int*)ft_memalloc(sizeof(int) * 3);
+		//mast->que[weight] = (int*)ft_memalloc(sizeof(int) * 3);
 		while(tmp != NULL)//go through list of all connected points
 		{
 			cnt1 = 0;
 			int i = 0;
-			for (i = 0; i <= cnt && i < mast->rooms; i++)//go through the queue up to the last one set
+			for (i = 0; i <= cnt && i < mast->rooms; i++)//go through the mast->queue up to the last one set
 			{
-				// if (que[i][0] == que[cnt - 1][0])// || que[i][0] == que[cnt][1])
+				// if (mast->que[i][0] == mast->que[cnt - 1][0])// || mast->que[i][0] == mast->que[cnt][1])
 				// 	cnt1++;
-				if ((que[i][0] == tmp->l2_id) && que[i][2] != 0 && que[i][2] <= weight)//checks if the next link is already in que// exists and it has less weight than the current weight and it is one of the next links, cnt1++
+				if ((mast->que[i][0] == tmp->l2_id) && mast->que[i][2] != 0 && mast->que[i][2] <= weight)//checks if the next link is already in mast->que// exists and it has less weight than the current weight and it is one of the next links, cnt1++
 					cnt1++;
 			}
-			if (cnt1 == 0) //if non of the above was true, set the next que to the current next node
+			if (cnt1 == 0) //if non of the above was true, set the next mast->que to the current next node
 			{
-				que[cnt][0] = tmp->l2_id;
-				que[cnt][1] = tmp->l1_id;
-				que[cnt][2] = weight;
-				// printf("%s-%s;wieght:%d\n", mast->r_arr_st[que[cnt][0]]->room, mast->r_arr_st[que[cnt][1]]->room, weight);
+				mast->que[cnt][0] = tmp->l2_id;
+				mast->que[cnt][1] = tmp->l1_id;
+				mast->que[cnt][2] = weight;
+				// printf("%s-%s;wieght:%d\n", mast->r_arr_st[mast->que[cnt][0]]->room, mast->r_arr_st[mast->que[cnt][1]]->room, weight);
 				
-				if ((int)que[cnt][0] == mast->end) //if we have reached the end, we have found the path
+				if ((int)mast->que[cnt][0] == mast->end) //if we have reached the end, we have found the path
 				{
-					// printf("weight: %d, l: %d, %d, \n", weight, cnt, que[cnt][0]);
+					// printf("weight: %d, l: %d, %d, \n", weight, cnt, mast->que[cnt][0]);
 					mast->weight = cnt;
-					mast->que = que;
+					// mast->mast->que = mast->que;
 					mast->cnt = cnt;
 					construct(mast);
 					return ;
@@ -178,17 +178,17 @@ int w = 0;////////////
 				cnt++;
 			}
 
-			//mast->r_arr_st[que[cnt][0]]->weight = weight;
+			//mast->r_arr_st[mast->que[cnt][0]]->weight = weight;
 			//if(!mast->r_arr_st[i]->visited)
 
 			tmp = tmp->next;
 			// w++;
 		}
-		// printf("que[weight][0]: %d\n", que[weight][0]);
+		// printf("mast->que[weight][0]: %d\n", mast->que[weight][0]);
 		// for (int l = 0; l < weight; l++)
-		// 	if (que[l][0] == mast->end)
-		// 		printf("weight: %d, l: %d, %d, ", weight, l, que[l][0]);
-		// if (que[weight][0] == mast->end)// || que[cnt-1][0] == mast->end)
+		// 	if (mast->que[l][0] == mast->end)
+		// 		printf("weight: %d, l: %d, %d, ", weight, l, mast->que[l][0]);
+		// if (mast->que[weight][0] == mast->end)// || mast->que[cnt-1][0] == mast->end)
 		// {
 		// 	ft_putnbr(1);
 		// 	break ;

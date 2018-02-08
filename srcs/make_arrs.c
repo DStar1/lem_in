@@ -6,7 +6,7 @@
 /*   By: hasmith <hasmith@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/29 20:35:29 by hasmith           #+#    #+#             */
-/*   Updated: 2018/02/07 18:09:12 by hasmith          ###   ########.fr       */
+/*   Updated: 2018/02/08 12:18:07 by hasmith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	make_arrs(t_mast *mast)
 				free(tmp[2]);
 			}
 			else
-				exit(1); //invalid coordinates
+				ERROR("invalid coordinates");//exit(1); //invalid coordinates
 			//printf("r:(%s, %s, %s) ", mast->room_arr[r][0], mast->room_arr[r][1], mast->room_arr[r][2]);////////////////////////////
 			free(tmp);
 			r++;
