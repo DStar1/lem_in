@@ -6,7 +6,7 @@
 /*   By: hasmith <hasmith@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 23:07:38 by hasmith           #+#    #+#             */
-/*   Updated: 2018/02/07 20:29:55 by hasmith          ###   ########.fr       */
+/*   Updated: 2018/02/07 23:02:19 by hasmith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ typedef struct		s_mast
 	int				found;
 	int				y_len;
 	char			**file;
+	char			*file_str;
 	t_links			**hash_arr;//t_links
 	int				ants;
 	int				links;

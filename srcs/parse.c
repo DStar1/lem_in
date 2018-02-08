@@ -6,7 +6,7 @@
 /*   By: hasmith <hasmith@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 23:06:46 by hasmith           #+#    #+#             */
-/*   Updated: 2018/02/06 16:37:56 by hasmith          ###   ########.fr       */
+/*   Updated: 2018/02/08 01:25:56 by hasmith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,16 +99,19 @@ int		valid_room(t_mast *mast)
 
 int     parse(t_mast *mast)
 {
-	while ((get_next_line(mast->fd, &mast->ln)))
-	{
-		if (ft_strncmp(mast->ln, "#", 1) != 0)
-			mast->file[mast->j++] = ft_strdup(mast->ln);
-		else if (ft_strcmp(mast->ln, "##start") == 0 || ft_strcmp(mast->ln, "##end") == 0)
-			mast->file[mast->j++] = ft_strdup(mast->ln);
-		free(mast->ln);
-		mast->ln = NULL;
-	}
-	free(mast->ln);
+	// mast->fd = 0;
+	// mast->ln = NULL;
+	// while ((get_next_line(mast->fd, &mast->ln)))
+	// {
+	// 	if (ft_strncmp(mast->ln, "#", 1) != 0)
+	// 		mast->file[mast->j++] = ft_strdup(mast->ln);
+	// 	else if (ft_strcmp(mast->ln, "##start") == 0 || ft_strcmp(mast->ln, "##end") == 0)
+	// 		mast->file[mast->j++] = ft_strdup(mast->ln);
+	// 	// printf("%s\n", mast->ln);///////////////////
+	// 	free(mast->ln);
+	// 	mast->ln = NULL;
+	// }
+	// free(mast->ln);
 	mast->j = -1;
 	while (++mast->j < mast->y_len) //reads file and validation
 	{
