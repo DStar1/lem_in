@@ -6,7 +6,7 @@
 /*   By: hasmith <hasmith@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/01 22:01:41 by hasmith           #+#    #+#             */
-/*   Updated: 2018/02/08 13:28:40 by hasmith          ###   ########.fr       */
+/*   Updated: 2018/02/08 14:51:04 by hasmith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,6 +146,8 @@ int w = 0;////////////
 		(cnt == 0) ? cnt++ : 0; //keep track of where to add next room to mast->que
 		//if cnt is == mast->rooms, there is no path?
 		weight++;
+		if (weight >= mast->rooms)
+			ERROR("There's no path\n");
 		//cnt = weight;
 		//mast->que[weight] = (int*)ft_memalloc(sizeof(int) * 3);
 		while(tmp != NULL)//go through list of all connected points

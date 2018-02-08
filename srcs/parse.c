@@ -6,7 +6,7 @@
 /*   By: hasmith <hasmith@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 23:06:46 by hasmith           #+#    #+#             */
-/*   Updated: 2018/02/08 01:25:56 by hasmith          ###   ########.fr       */
+/*   Updated: 2018/02/08 15:07:24 by hasmith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int		valid_link(t_mast *mast)
 			}
 		}
 		else
-			exit (1);/////////////
+			ERROR("Invalid links\n");//exit (1);/////////////
 	}
 	// exit (1);/////////////
 	// if (str)
@@ -84,7 +84,7 @@ int		valid_room(t_mast *mast)
 			}
 		}
 		else
-			exit (1);/////////////
+			ERROR("Invalid rooms\n");//exit (1);/////////////
 	}
 	// exit (1);/////////////
 	// if (str)
@@ -99,30 +99,14 @@ int		valid_room(t_mast *mast)
 
 int     parse(t_mast *mast)
 {
-	// mast->fd = 0;
-	// mast->ln = NULL;
-	// while ((get_next_line(mast->fd, &mast->ln)))
-	// {
-	// 	if (ft_strncmp(mast->ln, "#", 1) != 0)
-	// 		mast->file[mast->j++] = ft_strdup(mast->ln);
-	// 	else if (ft_strcmp(mast->ln, "##start") == 0 || ft_strcmp(mast->ln, "##end") == 0)
-	// 		mast->file[mast->j++] = ft_strdup(mast->ln);
-	// 	// printf("%s\n", mast->ln);///////////////////
-	// 	free(mast->ln);
-	// 	mast->ln = NULL;
-	// }
-	// free(mast->ln);
 	mast->j = -1;
 	while (++mast->j < mast->y_len) //reads file and validation
 	{
 		// printf("%s\n", mast->file[mast->j]);
-		if (mast->j == 0)
-			{mast->ants = f_atoi(mast, 0);}
-		// else if ((ft_strncmp(mast->file[mast->j], "#", 1) != 0 && ft_strncmp(mast->file[mast->j], "L", 1) != 0) && (valid_room(mast) == 0 && valid_link(mast) == 0)) //ft_strncmp(mast->file[mast->j], "##", 2) != 0 && 
-		// {
-		// 	printf("exit of %s\n", mast->file[mast->j]);
-		// 	exit(1);
-		// }
+		if (mast->j == 0 && ft_isnbr(mast->file[mast->j]))
+			mast->ants = f_atoi(mast, 0);
+		if (mast->j == 0 && mast->ants == 0)
+			ERROR("No ants\n");
 		if (valid_room(mast))
 			mast->rooms++;
 		if (valid_link(mast))
@@ -153,7 +137,6 @@ int     parse(t_mast *mast)
 			else
 				exit (1);/////////////
 		}
-
 		//ignore anything that starts with a ##
 		// mast->j++;
 	}

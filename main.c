@@ -6,7 +6,7 @@
 /*   By: hasmith <hasmith@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 23:10:34 by hasmith           #+#    #+#             */
-/*   Updated: 2018/02/08 14:14:27 by hasmith          ###   ########.fr       */
+/*   Updated: 2018/02/08 14:54:58 by hasmith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,22 +114,9 @@ int		find_size(t_mast *mast) //sometimes it gives an error beacuse I chaged this
 	while ((get_next_line(mast->fd, &mast->ln)))
 	{
 		// printf("%d\n", mast->y_len);
-		if (ft_strncmp(mast->ln, "#", 1) != 0)
+		if (ft_strncmp(mast->ln, "#", 1) != 0 || ft_strcmp(mast->ln, "##start") == 0 || ft_strcmp(mast->ln, "##end") == 0)
 		{
-			if (!mast->file_str)//this means that the first has to be ants?
-				mast->file_str = ft_strdup(mast->ln);
-			else
-			{
-				new = ft_strjoin_clr_1st(mast->file_str, mast->ln);
-				mast->file_str = new;
-			}
-			new = ft_strjoin_clr_1st(mast->file_str, "\n");
-			mast->file_str = new;
-			mast->y_len++;
-		}
-		else if (ft_strcmp(mast->ln, "##start") == 0 || ft_strcmp(mast->ln, "##end") == 0)
-		{
-			if (!mast->file_str)//this means that the first has to be ants?
+			if (!mast->file_str)
 				mast->file_str = ft_strdup(mast->ln);
 			else
 			{
