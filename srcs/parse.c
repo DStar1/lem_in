@@ -6,34 +6,11 @@
 /*   By: hasmith <hasmith@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 23:06:46 by hasmith           #+#    #+#             */
-/*   Updated: 2018/02/08 23:34:00 by hasmith          ###   ########.fr       */
+/*   Updated: 2018/02/09 12:32:44 by hasmith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lem_in.h"
-
-/*
-** Ants number
-*/
-
-int			f_atoi(t_mast *mast, int start)
-{
-	int start1;
-	int nb;
-
-	nb = 0;
-	start1 = start;
-	while (mast->file[0][start] && ft_isdigit(mast->file[0][start]))
-	{
-		nb += (mast->file[0][start] - '0');
-		nb *= 10;
-		start++;
-	}
-	nb /= 10;
-	if (mast->file[0][start] == '\0')
-		return (nb);
-	return (0);
-}
 
 /*
 ** Checks to see if it's a valid link
@@ -117,13 +94,12 @@ int			parse(t_mast *mast)
 	while (++mast->j < mast->y_len)
 	{
 		if (mast->j == 0 && ft_isnbr(mast->file[mast->j]))
-			mast->ants = f_atoi(mast, 0);
+			mast->ants = ft_p_atoi(mast->file[0], 0);
 		IF_ERROR((mast->j == 0 && mast->ants == 0), "Invalid ants\n");
 		IF_ERROR((valid_room(mast) && valid_link(mast)), "Illegal name\n");
-		if (valid_room(mast))
-			mast->rooms++;
-		if (valid_link(mast))
-			mast->links++;
+		IF_ERROR((valid_room(mast) && mast->links), "Invalid order\n");
+		IF(valid_room(mast), mast->rooms++);
+		IF(valid_link(mast), mast->links++);
 		if (!ft_strcmp(mast->file[mast->j], "##start"))
 			mast->start = -1;
 		if ((mast->start == -1 || (!ft_strcmp(mast->file[mast->j], "##end")))

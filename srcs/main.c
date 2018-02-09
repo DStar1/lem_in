@@ -6,7 +6,7 @@
 /*   By: hasmith <hasmith@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 23:10:34 by hasmith           #+#    #+#             */
-/*   Updated: 2018/02/09 01:29:30 by hasmith          ###   ########.fr       */
+/*   Updated: 2018/02/09 12:32:08 by hasmith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,18 +66,16 @@ int			parse_char(t_mast *mst)
 		IF_ERROR(ft_strncmp(mst->ln, "L", 1) == 0, "L names are invalid\n");
 		if (ft_strncmp(mst->ln, "#", 1) != 0 || !ft_strcmp(mst->ln, "##start")
 			|| ft_strcmp(mst->ln, "##end") == 0)
-		{
-			if (!mst->file_str)
-				mst->file_str = ft_strdup(mst->ln);
-			else
-			{
-				mst->new_str = ft_strjoin_clr_1st(mst->file_str, mst->ln);
-				mst->file_str = mst->new_str;
-			}
-			mst->new_str = ft_strjoin_clr_1st(mst->file_str, "\n");
-			mst->file_str = mst->new_str;
 			mst->y_len++;
+		if (!mst->file_str)
+			mst->file_str = ft_strdup(mst->ln);
+		else
+		{
+			mst->new_str = ft_strjoin_clr_1st(mst->file_str, mst->ln);
+			mst->file_str = mst->new_str;
 		}
+		mst->new_str = ft_strjoin_clr_1st(mst->file_str, "\n");
+		mst->file_str = mst->new_str;
 		ft_memdel((void**)&mst->ln);
 	}
 	IF_ERROR((mst->y_len == 0), "Empty\n");
@@ -90,6 +88,7 @@ static void	put_int_2d_arr(t_mast *mst)
 	int		q;
 	int		y;
 	int		p;
+	char	*tmp;
 
 	q = 0;
 	y = 0;
@@ -98,8 +97,25 @@ static void	put_int_2d_arr(t_mast *mst)
 	while (mst->file_str[++p])
 		if (mst->file_str[p] == '\n')
 		{
-			mst->file[y++] = ft_strsub(mst->file_str, q, p - q);
+			tmp = ft_strsub(mst->file_str, q, p - q);
+			if (ft_strncmp(tmp, "#", 1) != 0 || !ft_strcmp(tmp, "##start")
+			|| ft_strcmp(tmp, "##end") == 0)
+				mst->file[y++] = tmp;
+			else
+				ft_memdel((void**)&tmp);
 			q = p + 1;
+		}
+	p = -1;
+	while (mst->file[++p])
+		if (valid_room(mst))
+		{
+			q = -1;
+			while (mst->file[++q])
+				if (valid_room(mst) && q != p)
+				{
+					if (!ft_strcmp(mst->file[p], mst->file[q]))
+						ERROR("Duplicate rooms\n");
+				}
 		}
 }
 

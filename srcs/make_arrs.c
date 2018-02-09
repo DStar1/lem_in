@@ -6,11 +6,33 @@
 /*   By: hasmith <hasmith@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/29 20:35:29 by hasmith           #+#    #+#             */
-/*   Updated: 2018/02/08 21:02:48 by hasmith          ###   ########.fr       */
+/*   Updated: 2018/02/09 12:56:54 by hasmith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lem_in.h"
+
+/*
+** multiple same rooms
+*/
+
+static void	multip_rooms(t_mast *mst)
+{
+	int		q;
+	int		p;
+
+	q = 0;
+	p = -1;
+	while (++p < mst->rooms)
+	{
+		q = -1;
+		while (++q < mst->rooms)
+		{
+			if (p != q && !ft_strcmp(mst->r_arr_st[p]->room, mst->r_arr_st[q]->room))
+				ERROR("Multiple rooms w/ same name\n");
+		}
+	}
+}
 
 static void	valid(t_mast *mast, int r)
 {
@@ -57,4 +79,5 @@ void		make_arrs(t_mast *mast)
 			mast->link_arr[l++] = ft_strsplit(mast->file[mast->j], '-');
 		mast->j++;
 	}
+	multip_rooms(mast);
 }
