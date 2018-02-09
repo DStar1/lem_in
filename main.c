@@ -6,7 +6,7 @@
 /*   By: hasmith <hasmith@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 23:10:34 by hasmith           #+#    #+#             */
-/*   Updated: 2018/02/08 18:33:16 by hasmith          ###   ########.fr       */
+/*   Updated: 2018/02/08 20:29:59 by hasmith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,48 +22,24 @@ void	send_ants(t_mast *mast)
 
 	// ants = (int*)ft_memalloc(sizeof(int) * mast->ants);
 	for (int q = 0; q < mast->ants; q++)
-		ants[q] = 0;//ants[q] = -1; //check for ants ending on index 0
+		ants[q] = 0;
 	ants_sent = 0;
-	// if (mast->path[1] == mast->end)
-	// {
-	// 	i = 0;
-	// 	while (i < ants_sent)
-	// 	{
-	// 		ants[i] += 1;
-	// 		if (ants[i] >= 0 && ants[i] < mast->qsize)
-	// 		{
-	// 			ft_putchar('L');
-	// 			ft_putnbr(i + 1);
-	// 			ft_putchar('-');
-	// 			ft_putstr(mast->r_arr_st[mast->path[ants[i]]]->room);
-	// 			if (i != ants_sent - 1)
-	// 				ft_putchar(' ');
-	// 		}
-	// 		i++;
-	// 	}
-	// 	ft_putchar('\n');
-	// }
-	// int cnt = 0;
-	while (mast->path[ants[mast->ants - 1]] != mast->end)//< mast->ants)
+	while (mast->path[ants[mast->ants - 1]] != mast->end)
 	{
 		if (ants_sent < mast->ants)
 			ants_sent++;
 		i = 0;
-		// cnt = 0;
 		while (i < ants_sent)
 		{
 			ants[i] += 1;
 			if (ants[i] >= 0 && ants[i] < mast->qsize)
 			{
-				// if (cnt != 0)
-				// 	ft_putchar(' ');
 				ft_putchar('L');
 				ft_putnbr(i + 1);
 				ft_putchar('-');
 				ft_putstr(mast->r_arr_st[mast->path[ants[i]]]->room);
-				if (i != ants_sent - 1)// && (mast->qsize > 2 && ants_sent != mast->ants - 1))
+				if (i != ants_sent - 1)
 					ft_putchar(' ');
-				// cnt++;
 			}
 			i++;
 		}
@@ -79,6 +55,7 @@ void	send_ants(t_mast *mast)
 void	free_linked_arr(t_mast *mast)
 {
 	int i;
+	t_links *tmp;
 
 	i = 0;
 	while (i < mast->rooms)
@@ -86,21 +63,22 @@ void	free_linked_arr(t_mast *mast)
 		while (mast->hash_arr[i] != 0)
 		{
 			// printf("(%d, %s)", mast->hash_arr[i]->p, mast->hash_arr[i]->l[0]);
-			free(mast->hash_arr[i]);
+			tmp = mast->hash_arr[i];
 			mast->hash_arr[i] = mast->hash_arr[i]->next;
-			//j++;
+			free(tmp);
 		}
-		// printf("\n");
 		i++;
 	}
 	free(mast->hash_arr);
 }
 
 /*
-** Find array size to malloc
+** Maybe handle ##coments in intial parcing with getnext line. just dont add the comments into mast->file
+** also maybe if start char is 'L' it is false
+** ignore anything that starts with a ##
 */
 
-int		find_size(t_mast *mast) //sometimes it gives an error beacuse I chaged this
+int		parse_char(t_mast *mast) //sometimes it gives an error beacuse I chaged this
 {
 	char *new;
 	char *tmp;
@@ -109,6 +87,7 @@ int		find_size(t_mast *mast) //sometimes it gives an error beacuse I chaged this
 	mast->y_len = 0;
 	// mast->fd = open(mast->filename, O_RDONLY);/////get rid of when reading from stdin
 	// mast->ln = NULL;
+	// mast->fd = 0;
 	while ((get_next_line(mast->fd, &mast->ln)))
 	{
 		if (ft_strcmp(mast->ln, "") == 0) //need a way to get out of the loop
@@ -135,6 +114,7 @@ int		find_size(t_mast *mast) //sometimes it gives an error beacuse I chaged this
 	if (mast->y_len == 0)
 		ERROR("Empty\n");
 	free(mast->ln);
+	mast->ln = NULL;
 	// close(mast->fd);//get rid of when reading from stdin
 	return (0);
 }
@@ -142,15 +122,17 @@ int		find_size(t_mast *mast) //sometimes it gives an error beacuse I chaged this
 int     main(int ac, char **av)
 {
 	t_mast mast;
+	int q;
+	int y;
 	// mast.filename = ft_strdup(av[1]);
 	if (ac != 1 || ft_strcmp(av[0], "./lem-in") != 0)
 	 	ERROR("\nMust pipe file into stdin\nExample: ./lem-in < example.txt\n");
 	ft_bzero(&mast, sizeof(mast));
-	find_size(&mast);
-	mast.file = (char **)malloc(sizeof(char*) * (mast.y_len + 1));//maybe null terminate it
+	parse_char(&mast);
+	mast.file = (char **)ft_memalloc(sizeof(char*) * (mast.y_len + 1));//maybe null terminate it
 	mast.file[mast.y_len] = 0;
-	int q = 0;
-	int y = 0;
+	q = 0;
+	y = 0;
 	// printf("%d\n", mast.y_len);
 	for (int p = 0; mast.file_str[p]; p++)
 	{	
@@ -160,37 +142,17 @@ int     main(int ac, char **av)
 			q = p + 1;
 		}
 	}
-	// for (int p = 0; mast.file[p]; p++)
-	// 	printf("%s\n", mast.file[p]);
 	parse(&mast);
-// ft_putnbr(1);
-	//mast.j = -1;
-	// while (++mast.j < mast.y_len)
-	// 	printf("!:%s\n", mast.file[mast.j]);
 	make_arrs(&mast);
-// ft_putnbr(2);
-
 	set_links(&mast);
-// ft_putnbr(3);
-	solve(&mast);//solves
-	
-// ft_putnbr(4);
+	solve(&mast);
 	ft_putstr(mast.file_str);
 	ft_putchar('\n');
-	// ft_putnbr(mast.qsize);
-	// ft_putchar('\n');
 	send_ants(&mast);
-// ft_putnbr(5);
-	////ft_putarr(mast.file);
-	// close(mast.fd);//get rid of when reading from stdin
-	// printf("y_len: %d, ants: %d, rooms: %d, links: %d\n", mast.y_len, mast.ants, mast.rooms, mast.links);
-//ft_putnbr(6);
-	//free(mast.file_str);
 	free_linked_arr(&mast);
-	// printf("%d\n", ac);
 	// while (1)
 	// 	;
-	//exit(1);
+	exit(1);
     return (0);
 }
 

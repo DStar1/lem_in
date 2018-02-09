@@ -6,7 +6,7 @@
 /*   By: hasmith <hasmith@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/22 16:56:52 by hasmith           #+#    #+#             */
-/*   Updated: 2018/02/08 12:09:26 by hasmith          ###   ########.fr       */
+/*   Updated: 2018/02/08 19:36:34 by hasmith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,5 +122,6 @@ void				*ft_memncpy(
 						size_t start,
 						size_t n);
 void				ft_swap(int *a, int *b);
+void				*ft_memalloc_neg(size_t size);
 
 #endif

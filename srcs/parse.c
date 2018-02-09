@@ -6,7 +6,7 @@
 /*   By: hasmith <hasmith@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 23:06:46 by hasmith           #+#    #+#             */
-/*   Updated: 2018/02/08 17:14:48 by hasmith          ###   ########.fr       */
+/*   Updated: 2018/02/08 20:31:04 by hasmith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ int		f_atoi(t_mast *mast, int start)
 	while (mast->file[0][start] && ft_isdigit(mast->file[0][start]))
 	{
 		nb += (mast->file[0][start] - '0');
-
 		nb *= 10;
 		start++;
 	}
@@ -38,8 +37,6 @@ int		f_atoi(t_mast *mast, int start)
 
 int		valid_link(t_mast *mast)
 {
-	//if room has 3 things and no spaces in the begining and end and in the 2
-	//last things are numbers the first can be a string
 	char *str;
 
 	str = mast->file[mast->j];
@@ -48,28 +45,22 @@ int		valid_link(t_mast *mast)
 		if (str[0] != ' ' && str[ft_strlen(str) - 1] != ' ')
 		{
 			if (ft_cntstrwords(str, '-') == 2)//maybe instead, check to see if there is only one '-' and two variables because right now there can be multiple '---' or if there is "0- 0"
-			{
-				//printf("link is correct");
 				return (1);
-			}
 		}
 		else
-			ERROR("Invalid links\n");//exit (1);/////////////
+			ERROR("Invalid links\n");
 	}
-	// exit (1);/////////////
-	// if (str)
-	// 	free(str);
 	return (0);
 }
 
 /*
 ** Checks to see if it's a valid room
+** if room has 3 things and no spaces in the begining and end and in the 2
+** last things are numbers the first can be a string
 */
 
 int		valid_room(t_mast *mast)
 {
-	//if room has 3 things and no spaces in the begining and end and in the 2
-	// last things are numbers the first can be a string
 	char *str;
 
 	str = mast->file[mast->j];
@@ -78,31 +69,23 @@ int		valid_room(t_mast *mast)
 		if (str[0] != ' ' && str[ft_strlen(str) - 1] != ' ')
 		{
 			if (ft_cntstrwords(str, ' ') == 3)
-			{
-				//printf("start is correct");
 				return (1);
-			}
 		}
 		else
-			ERROR("Invalid rooms\n");//exit (1);/////////////
+			ERROR("Invalid rooms\n");
 	}
-	// exit (1);/////////////
-	// if (str)
-	// 	free(str);
 	return (0);
 }
 
 /*
-** Maybe handle ##coments in intial parcing with getnext line. just dont add the comments into mast->file
-** also maybe if start char is 'L' it is false
+** parce and validate from 2d file array
 */
 
 int     parse(t_mast *mast)
 {
 	mast->j = -1;
-	while (++mast->j < mast->y_len) //reads file and validation
+	while (++mast->j < mast->y_len)
 	{
-		// printf("%s\n", mast->file[mast->j]);
 		if (mast->j == 0 && ft_isnbr(mast->file[mast->j]))
 			mast->ants = f_atoi(mast, 0);
 		if (mast->j == 0 && mast->ants == 0)
@@ -125,12 +108,11 @@ int     parse(t_mast *mast)
 				mast->rooms++;
 			}
 			else
-				ERROR("Invalid start\n");//exit (1);/////////////
+				ERROR("Invalid start\n");
 		}
 		else if (ft_strcmp(mast->file[mast->j], "##end") == 0 && mast->file[mast->j + 1])
 		{
 			mast->j++;
-			// printf("YOUR IN %d\n", mast->rooms);
 			if (valid_room(mast) != 0)
 			{
 				if (mast->end_string)
@@ -140,20 +122,18 @@ int     parse(t_mast *mast)
 				mast->rooms++;
 			}
 			else
-				ERROR("Invalid start\n");//exit (1);/////////////
+				ERROR("Invalid start\n");
 		}
 		else if (!valid_room(mast) && !valid_link(mast) && mast->j != 0)
 			ERROR("Invalid room/link\n");
-		//ignore anything that starts with a ##
-		// mast->j++;
 	}
 	if (mast->rooms == 0)
-		ERROR("No rooms\n");//exit (1);
+		ERROR("No rooms\n");
 	if (mast->links == 0)
-		ERROR("No links\n");//exit (1);
+		ERROR("No links\n");
 	if (!mast->start_string)
-		ERROR("No start\n");//exit (1);
+		ERROR("No start\n");
 	if (!mast->end_string)
-		ERROR("No end\n");//exit (1);
+		ERROR("No end\n");
 	return (0);
 }

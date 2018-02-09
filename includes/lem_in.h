@@ -6,7 +6,7 @@
 /*   By: hasmith <hasmith@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 23:07:38 by hasmith           #+#    #+#             */
-/*   Updated: 2018/02/08 12:03:32 by hasmith          ###   ########.fr       */
+/*   Updated: 2018/02/08 19:56:13 by hasmith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,6 @@ typedef struct		s_links
 	int				l1_id;
 	char			*l2;
 	int				l2_id;
-	// int				c1;////////coordinate 1
-	// int				c2;////////coordinate 2
 	int				weight;
 	struct	s_links	*next;
 }					t_links;

@@ -75,6 +75,7 @@ SRC = 	ft_putchar.c \
 		ft_abs.c \
 		ft_memncpy.c \
 		ft_swap.c \
+		ft_memalloc_neg.c \
 		ft_lstsize.c
 
 all: $(NAME)
