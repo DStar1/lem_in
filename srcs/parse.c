@@ -6,7 +6,7 @@
 /*   By: hasmith <hasmith@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 23:06:46 by hasmith           #+#    #+#             */
-/*   Updated: 2018/02/08 15:07:24 by hasmith          ###   ########.fr       */
+/*   Updated: 2018/02/08 17:14:48 by hasmith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,8 @@ int     parse(t_mast *mast)
 			mast->ants = f_atoi(mast, 0);
 		if (mast->j == 0 && mast->ants == 0)
 			ERROR("No ants\n");
+		if (valid_room(mast) && valid_link(mast))
+			ERROR("Illegal name\n");
 		if (valid_room(mast))
 			mast->rooms++;
 		if (valid_link(mast))
@@ -116,12 +118,14 @@ int     parse(t_mast *mast)
 			mast->j++;
 			if (valid_room(mast) != 0)
 			{
+				if (mast->start_string)
+					ERROR("Multiple starts\n");
 				mast->start_string = mast->file[mast->j];
 				mast->start = mast->rooms;
 				mast->rooms++;
 			}
 			else
-				exit (1);/////////////
+				ERROR("Invalid start\n");//exit (1);/////////////
 		}
 		else if (ft_strcmp(mast->file[mast->j], "##end") == 0 && mast->file[mast->j + 1])
 		{
@@ -129,19 +133,27 @@ int     parse(t_mast *mast)
 			// printf("YOUR IN %d\n", mast->rooms);
 			if (valid_room(mast) != 0)
 			{
-				
+				if (mast->end_string)
+					ERROR("Multiple ends\n");
 				mast->end_string = mast->file[mast->j];
 				mast->end = mast->rooms;
 				mast->rooms++;
 			}
 			else
-				exit (1);/////////////
+				ERROR("Invalid start\n");//exit (1);/////////////
 		}
+		else if (!valid_room(mast) && !valid_link(mast) && mast->j != 0)
+			ERROR("Invalid room/link\n");
 		//ignore anything that starts with a ##
 		// mast->j++;
 	}
-	// if (mast->rooms == 0)
-	// 	exit (1);
-
+	if (mast->rooms == 0)
+		ERROR("No rooms\n");//exit (1);
+	if (mast->links == 0)
+		ERROR("No links\n");//exit (1);
+	if (!mast->start_string)
+		ERROR("No start\n");//exit (1);
+	if (!mast->end_string)
+		ERROR("No end\n");//exit (1);
 	return (0);
 }

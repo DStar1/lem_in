@@ -6,7 +6,7 @@
 /*   By: hasmith <hasmith@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/01 22:01:41 by hasmith           #+#    #+#             */
-/*   Updated: 2018/02/08 14:51:04 by hasmith          ###   ########.fr       */
+/*   Updated: 2018/02/08 17:11:14 by hasmith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ void construct(t_mast *mast)
 	//int	final[cnt][3];
 	mast->res = 0;
 	t_res *final = 0;
+	t_res *tmp = 0;
 	final = (t_res*)malloc(sizeof(t_res));
 	final->next = 0;
 	while (1)
@@ -109,7 +110,9 @@ void construct(t_mast *mast)
 		mast->path[q] = mast->res->qu[0];
 		//printf("\nnew: Q:%d", mast->path[q]);
 		q--;
+		tmp = mast->res;
 		mast->res = mast->res->next;
+		free(tmp);
 	}
 }
 
@@ -175,6 +178,9 @@ int w = 0;////////////
 					// mast->mast->que = mast->que;
 					mast->cnt = cnt;
 					construct(mast);
+					// for (int e = 0; e < mast->rooms; e++)
+					// 	free(mast->que[e]);
+					// free(mast->que);
 					return ;
 				}
 				cnt++;
