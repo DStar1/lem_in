@@ -6,7 +6,7 @@
 #    By: hasmith <hasmith@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/11 15:20:50 by hasmith           #+#    #+#              #
-#    Updated: 2018/02/08 23:53:40 by hasmith          ###   ########.fr        #
+#    Updated: 2018/02/09 14:49:55 by hasmith          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,14 +34,12 @@ $(NAME):
 	gcc $(FALGS) -g -c $(SRC)
 	cp libft/libft.a $(LIB) 
 	ar rcs $(LIB) *.o
-	gcc $(FALGS) -g -o $(NAME) $(LIB) $(MAIN) 
-#	gcc $(FALGS) -g -o $(NAME) $(LIB) $(MAIN) minilibx/libmlx.a libft/libft.a -framework OpenGL -framework AppKit
+	gcc $(FALGS) -g -o $(NAME) $(LIB) $(MAIN)
+	rm -rf lem-in.dSYM
 
 cmain:
 	make re
-	./lem-in test.txt
-#	./resources/filler_vm -f resources/maps/map00 -p1 resources/players/$(PLAYER) -p2 resources/players/abanlin.filler
-#	./resources/filler_vm -f resources/maps/map00 -p1 resources/players/$(PLAYER) -p2 resources/players/abanlin.filler > test.txt
+	./lem-in < test.txt
 
 clean:
 	/bin/rm -f *.o
@@ -51,7 +49,6 @@ fclean: clean
 	make fclean -C libft
 	/bin/rm -f $(NAME)
 	/bin/rm -f $(LIB)
-#	/bin/rm -rf lem-in.dSYM
 
 re: fclean all
 

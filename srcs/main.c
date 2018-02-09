@@ -6,7 +6,7 @@
 /*   By: hasmith <hasmith@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 23:10:34 by hasmith           #+#    #+#             */
-/*   Updated: 2018/02/09 12:32:08 by hasmith          ###   ########.fr       */
+/*   Updated: 2018/02/09 14:46:42 by hasmith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,24 +98,15 @@ static void	put_int_2d_arr(t_mast *mst)
 		if (mst->file_str[p] == '\n')
 		{
 			tmp = ft_strsub(mst->file_str, q, p - q);
+			if ((!ft_strcmp(tmp, "##start") || !ft_strcmp(tmp, "##end"))
+			&& mst->file_str[p + 1] == '#')
+				ERROR("Invalid start/end\n");
 			if (ft_strncmp(tmp, "#", 1) != 0 || !ft_strcmp(tmp, "##start")
 			|| ft_strcmp(tmp, "##end") == 0)
 				mst->file[y++] = tmp;
 			else
 				ft_memdel((void**)&tmp);
 			q = p + 1;
-		}
-	p = -1;
-	while (mst->file[++p])
-		if (valid_room(mst))
-		{
-			q = -1;
-			while (mst->file[++q])
-				if (valid_room(mst) && q != p)
-				{
-					if (!ft_strcmp(mst->file[p], mst->file[q]))
-						ERROR("Duplicate rooms\n");
-				}
 		}
 }
 
