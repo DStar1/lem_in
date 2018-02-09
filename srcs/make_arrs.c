@@ -6,7 +6,7 @@
 /*   By: hasmith <hasmith@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/29 20:35:29 by hasmith           #+#    #+#             */
-/*   Updated: 2018/02/09 12:56:54 by hasmith          ###   ########.fr       */
+/*   Updated: 2018/02/09 15:38:09 by hasmith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ static void	multip_rooms(t_mast *mst)
 		q = -1;
 		while (++q < mst->rooms)
 		{
-			if (p != q && !ft_strcmp(mst->r_arr_st[p]->room, mst->r_arr_st[q]->room))
+			if (p != q &&
+			!ft_strcmp(mst->r_arr_st[p]->room, mst->r_arr_st[q]->room))
 				ERROR("Multiple rooms w/ same name\n");
 		}
 	}
