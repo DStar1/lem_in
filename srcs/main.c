@@ -6,11 +6,23 @@
 /*   By: hasmith <hasmith@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 23:10:34 by hasmith           #+#    #+#             */
-/*   Updated: 2018/02/09 00:11:03 by hasmith          ###   ########.fr       */
+/*   Updated: 2018/02/09 01:29:30 by hasmith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lem_in.h"
+
+static void	print(t_mast *mst, int ants_sent, int ants_i, int i)
+{
+	if (ants_i >= 0 && ants_i < mst->qsize)
+	{
+		ft_putchar('L');
+		ft_putnbr(i + 1);
+		ft_putchar('-');
+		ft_putstr(mst->r_arr_st[mst->path[ants_i]]->room);
+		IF(i != ants_sent - 1, ft_putchar(' '));
+	}
+}
 
 void		send_ants(t_mast *mst)
 {
@@ -26,22 +38,10 @@ void		send_ants(t_mast *mst)
 	ants_sent = 0;
 	while (mst->path[ants[mst->ants - 1]] != mst->end)
 	{
-		if (ants_sent < mst->ants)
-			ants_sent++;
+		(ants_sent < mst->ants) ? ants_sent++ : 0;
 		i = -1;
 		while (++i < ants_sent)
-		{
-			ants[i] += 1;
-			if (ants[i] >= 0 && ants[i] < mst->qsize)
-			{
-				ft_putchar('L');
-				ft_putnbr(i + 1);
-				ft_putchar('-');
-				ft_putstr(mst->r_arr_st[mst->path[ants[i]]]->room);
-				if (i != ants_sent - 1)
-					ft_putchar(' ');
-			}
-		}
+			BRACKETS(ants[i] += 1, print(mst, ants_sent, ants[i], i));
 		if (mst->qsize > 2)
 			ft_putchar('\n');
 		else if (mst->qsize <= 2 && mst->path[ants[mst->ants - 1]] == mst->end)
@@ -51,25 +51,6 @@ void		send_ants(t_mast *mst)
 	}
 }
 
-void		free_linked_arr(t_mast *mst)
-{
-	int		i;
-	t_links *tmp;
-
-	i = 0;
-	while (i < mst->rooms)
-	{
-		while (mst->hash_arr[i] != 0)
-		{
-			tmp = mst->hash_arr[i];
-			mst->hash_arr[i] = mst->hash_arr[i]->next;
-			free(tmp);
-		}
-		i++;
-	}
-	free(mst->hash_arr);
-}
-
 /*
 ** If start char is 'L' it is false
 ** ignore anything that starts with a # except start and end
@@ -77,8 +58,6 @@ void		free_linked_arr(t_mast *mst)
 
 int			parse_char(t_mast *mst)
 {
-	char *new;
-
 	mst->y_len = 0;
 	while ((get_next_line(mst->fd, &mst->ln)))
 	{
@@ -92,11 +71,11 @@ int			parse_char(t_mast *mst)
 				mst->file_str = ft_strdup(mst->ln);
 			else
 			{
-				new = ft_strjoin_clr_1st(mst->file_str, mst->ln);
-				mst->file_str = new;
+				mst->new_str = ft_strjoin_clr_1st(mst->file_str, mst->ln);
+				mst->file_str = mst->new_str;
 			}
-			new = ft_strjoin_clr_1st(mst->file_str, "\n");
-			mst->file_str = new;
+			mst->new_str = ft_strjoin_clr_1st(mst->file_str, "\n");
+			mst->file_str = mst->new_str;
 			mst->y_len++;
 		}
 		ft_memdel((void**)&mst->ln);
@@ -106,28 +85,33 @@ int			parse_char(t_mast *mst)
 	return (0);
 }
 
-int			main(int ac, char **av)
+static void	put_int_2d_arr(t_mast *mst)
 {
-	t_mast	mst;
 	int		q;
 	int		y;
 	int		p;
+
+	q = 0;
+	y = 0;
+	p = -1;
+	mst->file = (char **)ft_memalloc(sizeof(char*) * (mst->y_len + 1));
+	while (mst->file_str[++p])
+		if (mst->file_str[p] == '\n')
+		{
+			mst->file[y++] = ft_strsub(mst->file_str, q, p - q);
+			q = p + 1;
+		}
+}
+
+int			main(int ac, char **av)
+{
+	t_mast	mst;
 
 	if (ac != 1 || ft_strcmp(av[0], "./lem-in") != 0)
 		ERROR("\nMust pipe file into stdin\nExample: ./lem-in < example.txt\n");
 	ft_bzero(&mst, sizeof(mst));
 	parse_char(&mst);
-	mst.file = (char **)ft_memalloc(sizeof(char*) * (mst.y_len + 1));
-	mst.file[mst.y_len] = 0;
-	q = 0;
-	y = 0;
-	p = -1;
-	while (mst.file_str[++p])
-		if (mst.file_str[p] == '\n')
-		{
-			mst.file[y++] = ft_strsub(mst.file_str, q, p - q);
-			q = p + 1;
-		}
+	put_int_2d_arr(&mst);
 	parse(&mst);
 	make_arrs(&mst);
 	set_links(&mst);
@@ -136,8 +120,6 @@ int			main(int ac, char **av)
 	ft_putchar('\n');
 	send_ants(&mst);
 	free_linked_arr(&mst);
-	while (1)
-		;
 	exit(1);
 	return (0);
 }

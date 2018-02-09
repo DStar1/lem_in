@@ -6,11 +6,34 @@
 /*   By: hasmith <hasmith@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/29 18:15:22 by hasmith           #+#    #+#             */
-/*   Updated: 2018/02/08 22:23:27 by hasmith          ###   ########.fr       */
+/*   Updated: 2018/02/09 01:27:08 by hasmith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lem_in.h"
+
+/*
+** Free array of linked lists
+*/
+
+void		free_linked_arr(t_mast *mst)
+{
+	int		i;
+	t_links *tmp;
+
+	i = 0;
+	while (i < mst->rooms)
+	{
+		while (mst->hash_arr[i] != 0)
+		{
+			tmp = mst->hash_arr[i];
+			mst->hash_arr[i] = mst->hash_arr[i]->next;
+			free(tmp);
+		}
+		i++;
+	}
+	free(mst->hash_arr);
+}
 
 /*
 ** compare name with first or second link
