@@ -6,7 +6,7 @@
 #    By: hasmith <hasmith@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/11 15:20:50 by hasmith           #+#    #+#              #
-#    Updated: 2018/02/08 20:50:44 by hasmith          ###   ########.fr        #
+#    Updated: 2018/02/08 23:53:40 by hasmith          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ all: $(NAME)
 
 $(NAME):
 	make all -C libft
-	gcc -g -c $(SRC)
+	gcc $(FALGS) -g -c $(SRC)
 	cp libft/libft.a $(LIB) 
 	ar rcs $(LIB) *.o
 	gcc $(FALGS) -g -o $(NAME) $(LIB) $(MAIN) 

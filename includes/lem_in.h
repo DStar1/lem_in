@@ -6,7 +6,7 @@
 /*   By: hasmith <hasmith@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 23:07:38 by hasmith           #+#    #+#             */
-/*   Updated: 2018/02/08 19:56:13 by hasmith          ###   ########.fr       */
+/*   Updated: 2018/02/08 23:17:41 by hasmith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,8 @@ typedef struct		s_mast
 	int				weight;
 	int				**que;
 	int				cnt;
+	int				cnt1;
+	t_links			*tmp;
 }					t_mast;
 
 int     parse(t_mast *mast);

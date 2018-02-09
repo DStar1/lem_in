@@ -6,7 +6,7 @@
 /*   By: hasmith <hasmith@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/22 16:56:52 by hasmith           #+#    #+#             */
-/*   Updated: 2018/02/08 19:36:34 by hasmith          ###   ########.fr       */
+/*   Updated: 2018/02/08 21:52:11 by hasmith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <fcntl.h>
 # define BUFF_SIZE 1
 # define EXIT(x) if (x) {exit(1);}
+# define IF_ERROR(x, y) if (x) {ft_putstr(y);exit(1);}
 # define ERROR(x) {ft_putstr(x);exit(1);}
 # define IF(x, y) if (x) {(y);}
 # define IFELSE(x, y, z) if (x) {(y);} else {(z);}

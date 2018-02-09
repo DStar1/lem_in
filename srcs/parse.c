@@ -6,7 +6,7 @@
 /*   By: hasmith <hasmith@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 23:06:46 by hasmith           #+#    #+#             */
-/*   Updated: 2018/02/08 21:08:55 by hasmith          ###   ########.fr       */
+/*   Updated: 2018/02/08 23:34:00 by hasmith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 ** Ants number
 */
 
-int		f_atoi(t_mast *mast, int start)
+int			f_atoi(t_mast *mast, int start)
 {
 	int start1;
 	int nb;
@@ -41,7 +41,7 @@ int		f_atoi(t_mast *mast, int start)
 ** because right now there can be multiple '---' or if there is "0- 0"
 */
 
-int		valid_link(t_mast *mast)
+int			valid_link(t_mast *mast)
 {
 	char *str;
 
@@ -65,7 +65,7 @@ int		valid_link(t_mast *mast)
 ** last things are numbers the first can be a string
 */
 
-int		valid_room(t_mast *mast)
+int			valid_room(t_mast *mast)
 {
 	char *str;
 
@@ -83,63 +83,58 @@ int		valid_room(t_mast *mast)
 	return (0);
 }
 
+static void	check_start_end(t_mast *mast)
+{
+	mast->j++;
+	if (valid_room(mast) != 0)
+		if (mast->start == -1)
+		{
+			if (mast->start_string)
+				ERROR("Multiple starts\n");
+			mast->start_string = mast->file[mast->j];
+			mast->start = mast->rooms;
+			mast->rooms++;
+		}
+		else
+		{
+			if (mast->end_string)
+				ERROR("Multiple ends\n");
+			mast->end_string = mast->file[mast->j];
+			mast->end = mast->rooms;
+			mast->rooms++;
+		}
+	else
+		ERROR("Invalid start/end\n");
+}
+
 /*
 ** parce and validate from 2d file array
 */
 
-int		parse(t_mast *mast)
+int			parse(t_mast *mast)
 {
 	mast->j = -1;
 	while (++mast->j < mast->y_len)
 	{
 		if (mast->j == 0 && ft_isnbr(mast->file[mast->j]))
 			mast->ants = f_atoi(mast, 0);
-		if (mast->j == 0 && mast->ants == 0)
-			ERROR("No ants\n");
-		if (valid_room(mast) && valid_link(mast))
-			ERROR("Illegal name\n");
+		IF_ERROR((mast->j == 0 && mast->ants == 0), "Invalid ants\n");
+		IF_ERROR((valid_room(mast) && valid_link(mast)), "Illegal name\n");
 		if (valid_room(mast))
 			mast->rooms++;
 		if (valid_link(mast))
 			mast->links++;
-		if (!ft_strcmp(mast->file[mast->j], "##start") && mast->file[mast->j + 1])
-		{
-			mast->j++;
-			if (valid_room(mast) != 0)
-			{
-				if (mast->start_string)
-					ERROR("Multiple starts\n");
-				mast->start_string = mast->file[mast->j];
-				mast->start = mast->rooms;
-				mast->rooms++;
-			}
-			else
-				ERROR("Invalid start\n");
-		}
-		else if (!ft_strcmp(mast->file[mast->j], "##end") && mast->file[mast->j + 1])
-		{
-			mast->j++;
-			if (valid_room(mast) != 0)
-			{
-				if (mast->end_string)
-					ERROR("Multiple ends\n");
-				mast->end_string = mast->file[mast->j];
-				mast->end = mast->rooms;
-				mast->rooms++;
-			}
-			else
-				ERROR("Invalid start\n");
-		}
+		if (!ft_strcmp(mast->file[mast->j], "##start"))
+			mast->start = -1;
+		if ((mast->start == -1 || (!ft_strcmp(mast->file[mast->j], "##end")))
+			&& mast->file[mast->j + 1])
+			check_start_end(mast);
 		else if (!valid_room(mast) && !valid_link(mast) && mast->j != 0)
 			ERROR("Invalid room/link\n");
 	}
-	if (mast->rooms == 0)
-		ERROR("No rooms\n");
-	if (mast->links == 0)
-		ERROR("No links\n");
-	if (!mast->start_string)
-		ERROR("No start\n");
-	if (!mast->end_string)
-		ERROR("No end\n");
+	IF_ERROR(mast->rooms == 0, "No rooms\n");
+	IF_ERROR((mast->links == 0), "No links\n");
+	IF_ERROR((!mast->start_string), "No start\n");
+	IF_ERROR((!mast->end_string), "No end\n");
 	return (0);
 }
