@@ -6,11 +6,15 @@
 /*   By: hasmith <hasmith@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 23:06:46 by hasmith           #+#    #+#             */
-/*   Updated: 2018/02/08 20:31:04 by hasmith          ###   ########.fr       */
+/*   Updated: 2018/02/08 21:08:55 by hasmith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lem_in.h"
+
+/*
+** Ants number
+*/
 
 int		f_atoi(t_mast *mast, int start)
 {
@@ -26,13 +30,15 @@ int		f_atoi(t_mast *mast, int start)
 		start++;
 	}
 	nb /= 10;
-	if (mast->file[0][start] == '\0') //checks to see how many ants there are
+	if (mast->file[0][start] == '\0')
 		return (nb);
 	return (0);
 }
 
 /*
 ** Checks to see if it's a valid link
+** maybe instead, check to see if there is only one '-' and two variables
+** because right now there can be multiple '---' or if there is "0- 0"
 */
 
 int		valid_link(t_mast *mast)
@@ -44,7 +50,7 @@ int		valid_link(t_mast *mast)
 	{
 		if (str[0] != ' ' && str[ft_strlen(str) - 1] != ' ')
 		{
-			if (ft_cntstrwords(str, '-') == 2)//maybe instead, check to see if there is only one '-' and two variables because right now there can be multiple '---' or if there is "0- 0"
+			if (ft_cntstrwords(str, '-') == 2)
 				return (1);
 		}
 		else
@@ -81,7 +87,7 @@ int		valid_room(t_mast *mast)
 ** parce and validate from 2d file array
 */
 
-int     parse(t_mast *mast)
+int		parse(t_mast *mast)
 {
 	mast->j = -1;
 	while (++mast->j < mast->y_len)
@@ -96,7 +102,7 @@ int     parse(t_mast *mast)
 			mast->rooms++;
 		if (valid_link(mast))
 			mast->links++;
-		if (ft_strcmp(mast->file[mast->j], "##start") == 0 && mast->file[mast->j + 1])
+		if (!ft_strcmp(mast->file[mast->j], "##start") && mast->file[mast->j + 1])
 		{
 			mast->j++;
 			if (valid_room(mast) != 0)
@@ -110,7 +116,7 @@ int     parse(t_mast *mast)
 			else
 				ERROR("Invalid start\n");
 		}
-		else if (ft_strcmp(mast->file[mast->j], "##end") == 0 && mast->file[mast->j + 1])
+		else if (!ft_strcmp(mast->file[mast->j], "##end") && mast->file[mast->j + 1])
 		{
 			mast->j++;
 			if (valid_room(mast) != 0)

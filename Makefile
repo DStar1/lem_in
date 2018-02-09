@@ -6,7 +6,7 @@
 #    By: hasmith <hasmith@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/11 15:20:50 by hasmith           #+#    #+#              #
-#    Updated: 2018/02/08 17:02:51 by hasmith          ###   ########.fr        #
+#    Updated: 2018/02/08 20:50:44 by hasmith          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ GIT = test
 
 NAME = lem-in
 
-MAIN = main.c
+MAIN = srcs/main.c
 
 TEST = <argv[1]>
 
