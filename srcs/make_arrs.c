@@ -6,7 +6,7 @@
 /*   By: hasmith <hasmith@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/29 20:35:29 by hasmith           #+#    #+#             */
-/*   Updated: 2018/02/09 15:38:09 by hasmith          ###   ########.fr       */
+/*   Updated: 2018/02/09 17:03:04 by hasmith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static void	valid(t_mast *mast, int r)
 		free(tmp[2]);
 	}
 	else
-		ERROR("invalid coordinates");
+		ERROR("Invalid coordinates\n");
 	free(tmp);
 }
 
